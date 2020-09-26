@@ -1,0 +1,22 @@
+.person__edit-button {
+  border-style: none;
+  background-color: rgba(0, 0, 0, 0);
+  margin: 19px 0 0;
+  padding: 0;
+  align-self: start;
+  /*position: absolute;
+  bottom: 0;
+  right: 0;*/
+}
+
+@media (max-width: 772px) {
+  .person__edit-button {
+    margin: 4px 0 0;
+  }
+}
+
+@media (max-width: 514px) {
+  .person__edit-button {
+    margin: 14px 0 0;
+  }
+}

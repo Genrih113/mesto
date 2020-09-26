@@ -1,0 +1,14 @@
+.person__passion {
+  margin: 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff
+}
+
+@media (max-width: 772px) {
+  .person__passion {
+    font-size: 14px;
+  }
+}

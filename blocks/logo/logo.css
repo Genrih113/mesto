@@ -1,0 +1,15 @@
+.logo {
+  background-image: url('../../images/mesto_logo.svg');
+  width: 143px;
+  height: 34px;
+  background-size: contain;
+  /*padding-top: 25%;
+  background-repeat: no-repeat;*/
+}
+
+@media (max-width: 514px) {
+  .logo {
+    width: 104px;
+    height: 25px;
+  }
+}

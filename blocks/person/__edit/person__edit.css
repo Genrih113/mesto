@@ -1,0 +1,19 @@
+.person__edit {
+  display: flex;
+  margin-left: 30px;
+  margin-right: 18px;
+}
+
+@media (max-width: 772px) {
+  .person__edit {
+    margin-right: 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+@media (max-width: 514px) {
+  .person__edit {
+    margin-left: 0;
+  }
+}

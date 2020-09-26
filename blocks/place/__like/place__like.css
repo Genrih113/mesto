@@ -1,0 +1,6 @@
+.place__like {
+  background-image: url('../../../images/like.svg');
+  min-width: 21px;
+  background-repeat: no-repeat;
+  background-position: center;
+}

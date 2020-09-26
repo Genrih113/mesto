@@ -1,0 +1,12 @@
+.person__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 17px;
+}
+
+@media (max-width: 514px) {
+  .person__description {
+    padding-top: 10px;
+  }
+}
