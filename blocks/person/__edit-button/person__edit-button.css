@@ -4,9 +4,16 @@
   margin: 19px 0 0;
   padding: 0;
   align-self: start;
+  opacity: 1;
+  transition: opacity .4s linear;
   /*position: absolute;
   bottom: 0;
   right: 0;*/
+}
+
+.person__edit-button:hover {
+  cursor: pointer;
+  opacity: .6;
 }
 
 @media (max-width: 772px) {

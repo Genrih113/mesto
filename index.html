@@ -13,7 +13,6 @@
     <div class="page body__page">
       <header class="header page__header">
         <div class="logo header__logo"></div>
-        <!--div class="header__line"></div-->
       </header>
       <main class="main">
         <section class="profile">
@@ -21,17 +20,8 @@
             <img class="person__avatar" src="images/person__avatar.jpg">
             <div class="person__edit">
               <div class="person__description">
-                <!--
-                <div> class="person__edit"
-                  <h1 class="person__name">Жак-Ив Кусто</h1>
-                  <button class="person__edit-button" type="image">
-                    <img src="./images/edit-button.svg">
-                  </button>
-                </div>
-                -->
                 <h1 class="person__name">Жак-Ив Кусто</h1>
                 <p class="person__passion">Исследователь океана</p>
-
               </div>
               <button class="person__edit-button" type="image">
                 <img src="./images/edit-button.svg">
@@ -41,6 +31,17 @@
           <button class="add-button" type="image">
             <img class="add-button__img" src="./images/add-button1.svg">
           </button>
+          <div class="popup ppopup_opened">
+            <form class="popup__container">
+              <h2 class="popup__title">Редактировать профиль</h2>
+              <fieldset class="popup__content">
+                <input class="popup__name" type="text" placeholder="Имя">
+                <input class="popup__passion" type="text" placeholder="О себе">
+                <button class="popup__submit">Сохранить</button>
+              </fieldset>
+              <button class="popup__close"></button>
+            </form>
+          </div>
         </section>
         <section class="places">
           <div class="place">

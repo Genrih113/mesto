@@ -8,8 +8,15 @@
   border: 2px solid #fff;
   border-radius: 2px;
   background-color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  transition: opacity .4s linear;
   /*background-image: url('../../images/add-button.svg');
   object-fit: fill;*/
+}
+
+.add-button:hover {
+  cursor: pointer;
+  opacity: .6;
 }
 
 @media (max-width: 772px) {
