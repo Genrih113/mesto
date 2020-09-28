@@ -10,6 +10,10 @@
   background-color: rgba(0, 0, 0, 0);
   opacity: 1;
   transition: opacity .4s linear;
+
+  background-image: url('../../images/add-button1.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .add-button:hover {
