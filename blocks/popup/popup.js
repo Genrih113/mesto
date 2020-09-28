@@ -4,7 +4,6 @@ let popupName = document.querySelector('.popup__name');
 let popupPassion = document.querySelector('.popup__passion');
 let personName = document.querySelector('.person__name');
 let personPassion = document.querySelector('.person__passion');
-//let popup = document.querySelector('.popup');
 
 function personInfoCopyToPopupFn() {
   popupName.value = personName.textContent;
@@ -22,4 +21,11 @@ personInfoCopyToPopupFn();
 popupCloseButton.addEventListener('click', popupToggleFn);
 popupSubmitButton.addEventListener('click', personInfoCopyToPageFn);
 
-//popup.addEventListener('click', popupToggleFn);
+function popupBackgrClickCloseFn(event) {
+  if (event.target !== event.currentTarget) {
+    return;
+  }
+  popupToggleFn();
+};
+
+popup.addEventListener('click', popupBackgrClickCloseFn);
