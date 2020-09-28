@@ -1,15 +1,5 @@
 .header {
-  /*display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;*/
   min-height: 73px;
   width: 100%;
   border-bottom: solid 1px #545454;
 }
-
-/*@media (max-width: 950px) {
-  .header {
-    padding-left: 28px;
-  }
-}*/

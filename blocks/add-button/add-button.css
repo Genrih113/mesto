@@ -10,8 +10,6 @@
   background-color: rgba(0, 0, 0, 0);
   opacity: 1;
   transition: opacity .4s linear;
-  /*background-image: url('../../images/add-button.svg');
-  object-fit: fill;*/
 }
 
 .add-button:hover {
@@ -23,6 +21,5 @@
   .add-button {
     width: 100%;
     max-width: 282px;
-    /*margin-top: 36px;*/
   }
 }
