@@ -13,3 +13,9 @@
     font-size: 27px;
   }
 }
+
+@media (max-width: 514px) {
+  .person__name {
+    margin-left: auto;
+  }
+}

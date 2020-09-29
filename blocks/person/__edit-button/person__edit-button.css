@@ -7,9 +7,14 @@
   opacity: 1;
   transition: opacity .4s linear;
 
-  background-image: url('../../../images/edit-button.svg');
+  background-image: url('../../../images/edit-button1.svg');
+  background-size: 65%;
+  background-position: center;
+  background-repeat: no-repeat;
   width: 24px;
   height: 24px;
+  border: 2px solid white;
+  border-radius: 2px;
 }
 
 .person__edit-button:hover {
@@ -19,12 +24,14 @@
 
 @media (max-width: 772px) {
   .person__edit-button {
-    margin: 4px 0 0;
+    margin: 10px 0 0;
+    width: 18px;
+    height: 18px;
   }
 }
 
 @media (max-width: 514px) {
   .person__edit-button {
-    margin: 14px 0 0;
+    margin: 20px 0 0;
   }
 }

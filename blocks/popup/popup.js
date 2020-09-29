@@ -17,10 +17,6 @@ function personInfoCopyToPageFn() {
   popupToggleFn();
 };
 
-personInfoCopyToPopupFn();
-popupCloseButton.addEventListener('click', popupToggleFn);
-popupSubmitButton.addEventListener('click', personInfoCopyToPageFn);
-
 function popupBackgrClickCloseFn(event) {
   if (event.target !== event.currentTarget) {
     return;
@@ -28,4 +24,6 @@ function popupBackgrClickCloseFn(event) {
   popupToggleFn();
 };
 
+popupCloseButton.addEventListener('click', popupToggleFn);
+popupSubmitButton.addEventListener('click', personInfoCopyToPageFn);
 popup.addEventListener('click', popupBackgrClickCloseFn);

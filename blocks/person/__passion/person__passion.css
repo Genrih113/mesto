@@ -12,3 +12,9 @@
     font-size: 14px;
   }
 }
+
+@media (max-width: 514px) {
+  .person__passion {
+    margin-left: auto;
+  }
+}
