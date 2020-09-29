@@ -1,10 +1,20 @@
 .place__img {
   width: 100%;
-  border-radius: 10px 10px 0 0;
+
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+  transition: transform .4s linear;
 }
 
-/*
+
 .place:hover .place__img {
   transform: scale(1.1);
 }
-*/
+
