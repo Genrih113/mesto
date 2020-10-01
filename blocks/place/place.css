@@ -1,9 +1,4 @@
 .place {
   background-color: #fff;
   border-radius: 10px;
-  transition: background-color 0.4s linear;
-}
-
-.place:hover {
-  background-color: lightgray;
 }
