@@ -4,17 +4,31 @@
   font-style: normal;
   font-size: 18px;
   line-height: 22px;
-  color: #fff
+  color: #fff;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+    max-width: calc(100vw - 395px);
+}
+
+@media (min-width: 882px) {
+  .person__passion{
+    max-width: 487px;
+  }
 }
 
 @media (max-width: 772px) {
   .person__passion {
     font-size: 14px;
+    max-width: calc(100vw - 231px);
   }
 }
 
 @media (max-width: 514px) {
   .person__passion {
     margin-left: auto;
+    max-width: calc(100vw - 81px);
   }
 }

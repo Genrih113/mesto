@@ -6,16 +6,30 @@
   font-size: 42px;
   line-height: 1.33;
   color: #fff;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: calc(100vw - 395px);
+}
+
+@media (min-width: 882px) {
+  .person__name{
+    max-width: 487px;
+  }
 }
 
 @media (max-width: 772px) {
   .person__name {
     font-size: 27px;
+    max-width: calc(100vw - 231px);
   }
 }
 
 @media (max-width: 514px) {
   .person__name {
     margin-left: auto;
+    max-width: calc(100vw - 81px);
   }
 }
