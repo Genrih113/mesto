@@ -1,8 +1,10 @@
-.place__like {
+.place__like-button {
   background-image: url('../../../images/like.svg');
   min-width: 21px;
   background-repeat: no-repeat;
   background-position: center;
+  border-style: none;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 @keyframes heart-bit {
@@ -14,7 +16,7 @@
   }
 }
 
-.place__like:hover {
+.place__like-button:hover {
   animation: heart-bit .4s linear 1 normal backwards;
   transform: scale(1.3);
 }
