@@ -23,10 +23,10 @@
                 <h1 class="person__name">Жак-Ив Кусто</h1>
                 <p class="person__passion">Исследователь океана</p>
               </div>
-              <button class="person__edit-button" type="button"></button>
+              <button class="person__edit-button" type="button" aria-label="Редактировать"></button>
             </div>
           </div>
-          <button class="add-button" type="button"></button>
+          <button class="add-button" type="button" aria-label="Добавить"></button>
         </section>
         <section>
           <ul class="places">
@@ -79,14 +79,16 @@
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
       <div class="popup">
-        <form class="popup__container">
+        <form class="popup__container" name="popupForm">
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__content">
-            <input class="popup__input popup__name" type="text" placeholder="Имя">
-            <input class="popup__input popup__passion" type="text" placeholder="О себе">
+            <input class="popup__input popup__name" name="popupInputName"
+              type="text" required placeholder="Имя">
+            <input class="popup__input popup__passion" name="popupInputPassion"
+              type="text" required placeholder="О себе">
             <button class="popup__submit" type="submit">Сохранить</button>
           </fieldset>
-          <button class="popup__close" type="button"></button>
+          <button class="popup__close" type="button" aria-label="Закрыть"></button>
         </form>
       </div>
     </div>
