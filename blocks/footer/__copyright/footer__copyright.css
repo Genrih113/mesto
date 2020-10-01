@@ -1,4 +1,4 @@
-.footer__logo {
+.footer__copyright {
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -8,13 +8,13 @@
 }
 
 @media (max-width: 950px) {
-  .footer__logo {
+  .footer__copyright {
     padding-left: 18px;
   }
 }
 
 @media (max-width: 514px) {
-  .footer__logo {
+  .footer__copyright {
     font-size: 14px;
   }
 }
