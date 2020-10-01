@@ -23,7 +23,7 @@
 @media (max-width: 772px) {
   .person__name {
     font-size: 27px;
-    max-width: calc(100vw - 231px);
+    max-width: calc(100vw - 235px);
   }
 }
 

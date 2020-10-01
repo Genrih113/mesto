@@ -22,7 +22,7 @@
 @media (max-width: 772px) {
   .person__passion {
     font-size: 14px;
-    max-width: calc(100vw - 231px);
+    max-width: calc(100vw - 235px);
   }
 }
 
