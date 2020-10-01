@@ -1,3 +1,7 @@
+.main {
+  flex: 1;
+}
+
 @media (max-width: 950px) {
   .main {
     padding: 0 18px 0;
