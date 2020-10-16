@@ -1,0 +1,21 @@
+.popup__place-image {
+  /*display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;*/
+  /*justify-self: center;
+  width: 100%;*/
+  max-width: 75vw;
+  max-height: 75vh;
+  /*padding: 36px;
+  border-radius: 10px;
+  margin: auto;*/
+  object-fit: contain;
+}
+
+@media (max-width: 514px) {
+  .popup__container {
+    padding: 25px;
+  }
+}

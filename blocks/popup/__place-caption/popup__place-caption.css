@@ -1,0 +1,9 @@
+.popup__place-caption {
+  color: white;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 400;
+  position: absolute;
+  left: 0;
+  bottom: -25px;
+}

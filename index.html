@@ -87,74 +87,52 @@
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
 
-      <div class="popup">
-        <form class="popup__container" name="popupForm">
+      <div class="popup profile-popup">
+        <form class="popup__container profile-popup__container" name="profilePopupForm">
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__content">
-            <input class="popup__input popup__name" name="popupInputName"
+            <input class="popup__input profile-popup__name" name="popupInputName"
               type="text" required placeholder="Имя">
-            <input class="popup__input popup__passion" name="popupInputPassion"
+            <input class="popup__input profile-popup__passion" name="popupInputPassion"
               type="text" required placeholder="О себе">
             <button class="popup__submit" type="submit">Сохранить</button>
           </fieldset>
-          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+          <button class="popup__close profile-popup__close" type="button" aria-label="Закрыть"></button>
         </form>
       </div>
 
-      <div class="popup-add">
-        <form class="popup__container" name="popupForm">
+      <div class="popup place-popup">
+        <form class="popup__container place-popup__container" name="placePopupForm">
           <h2 class="popup__title">Новое место</h2>
           <fieldset class="popup__content">
-            <input class="popup__input popup__name" name="popupInputName"
+            <input class="popup__input place-popup__name" name="popupInputPlace"
               type="text" required placeholder="Название">
-            <input class="popup__input popup__passion" name="popupInputLink"
+            <input class="popup__input place-popup__link" name="popupInputLink"
               type="text" required placeholder="Ссылка на картинку">
             <button class="popup__submit" type="submit">Создать</button>
           </fieldset>
-          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+          <button class="popup__close place-popup__close" type="button" aria-label="Закрыть"></button>
         </form>
       </div>
-      <!--
-      <div class="popup-add">
-        <form class="popup-add__container" name="popup-addForm">
-          <h2 class="popup-add__title">Новое место</h2>
-          <fieldset class="popup-add__content">
-            <input class="popup-add__input popup-add__name" name="popup-addInputName"
-              type="text" required placeholder="Название">
-            <input class="popup-add__input popup-add__link" name="popup-addInputLink"
-              type="text" required placeholder="Ссылка на картинку">
-            <button class="popup-add__submit" type="submit">Создать</button>
-          </fieldset>
-          <button class="popup-add__close" type="button" aria-label="Закрыть"></button>
-        </form>
-      </div>
-      -->
+
+        <div class="popup popup_place-view">
+          <figure class="popup__figure">
+          <img class="popup__place-image" src="">
+          <figcaption class="popup__place-caption"></figcaption>
+          <button class="popup__close popup__close_place-view" type="button" aria-label="Закрыть"></button>
+          </figure>
+        </div>
+
     </div>
-    <!--
-    <template id="popup">
-      <div class="popup">
-        <form class="popup__container" name="popupForm">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <fieldset class="popup__content">
-            <input class="popup__input popup__name" name="popupInputName"
-              type="text" required placeholder="Имя">
-            <input class="popup__input popup__passion" name="popupInputPassion"
-              type="text" required placeholder="О себе">
-            <button class="popup__submit" type="submit">Сохранить</button>
-          </fieldset>
-          <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        </form>
-      </div>
-    </template>
-    -->
+
     <template id="place">
       <li class="place">
         <img class="place__img" src="" alt="">
         <div class="place__description">
           <h2 class="place__title"></h2>
           <button class="place__like-button" type="button"></button>
-          <button class="place__delete-button" type="button"></button>
         </div>
+        <button class="place__delete-button" type="button"></button>
       </li>
     </template>
     <script src="./scripts/index.js"></script>
