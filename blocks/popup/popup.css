@@ -5,8 +5,14 @@
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, .5);
-  display: none;
+  /*display: none;*/
   padding: 20px 80px;
+  z-index: 1;
+
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility .5s, opacity .5s linear;
 }
 
 @media (max-width: 514px) {

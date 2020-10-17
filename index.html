@@ -11,10 +11,13 @@
   </head>
   <body class="body">
     <div class="page body__page">
+
       <header class="header">
         <div class="logo header__logo"></div>
       </header>
+
       <main class="main">
+
         <section class="profile">
           <div class="person">
             <img class="person__avatar" src="images/person__avatar.jpg" alt="Аватар">
@@ -28,8 +31,10 @@
           </div>
           <button class="add-button" type="button" aria-label="Добавить"></button>
         </section>
+
         <section>
           <ul class="places">
+<<<<<<< HEAD
             <li class="place">
               <img class="place__img" src="./images/karachaevsk.jpg" alt="Сентинский Храм">
               <div class="place__description">
@@ -72,26 +77,79 @@
                 <button class="place__like-button" type="button"></button>
               </div>
             </li>
+=======
+
+>>>>>>> develop
           </ul>
         </section>
+
       </main>
+
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
+<<<<<<< HEAD
       <div class="popup">
         <form class="popup__container" name="popupForm">
+=======
+
+      <div class="popup profile-popup popup_profile">
+        <form class="popup__container popup__container_profile" name="profilePopupForm">
+>>>>>>> develop
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__content">
-            <input class="popup__input popup__name" name="popupInputName"
+            <input class="popup__input popup__name_profile" name="popupInputName"
               type="text" required placeholder="Имя">
-            <input class="popup__input popup__passion" name="popupInputPassion"
+            <input class="popup__input popup__passion_profile" name="popupInputPassion"
               type="text" required placeholder="О себе">
             <button class="popup__submit" type="submit">Сохранить</button>
           </fieldset>
-          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+          <button class="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
         </form>
       </div>
+<<<<<<< HEAD
     </div>
+=======
+
+      <div class="popup popup_place">
+        <form class="popup__container popup__container_place" name="placePopupForm">
+          <h2 class="popup__title">Новое место</h2>
+          <fieldset class="popup__content">
+            <input class="popup__input popup__name_place" name="popupInputPlace"
+              type="text" required placeholder="Название">
+            <input class="popup__input popup__link_place" name="popupInputLink"
+              type="text" required placeholder="Ссылка на картинку">
+            <button class="popup__submit" type="submit">Создать</button>
+          </fieldset>
+          <button class="popup__close popup__close_place" type="button" aria-label="Закрыть"></button>
+        </form>
+      </div>
+
+      <div class="popup popup_place-view">
+        <figure class="popup__figure">
+          <img class="popup__place-image" src="">
+          <figcaption class="popup__place-caption"></figcaption>
+          <button class="popup__close popup__close_place-view" type="button" aria-label="Закрыть"></button>
+        </figure>
+      </div>
+
+    </div>
+
+    <template id="place">
+      <li class="place">
+        <div class="place__img-container">
+          <img class="place__img" src="" alt="">
+        </div>
+        <div class="place__description">
+          <h2 class="place__title"></h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+        <button class="place__delete-button" type="button"></button>
+      </li>
+    </template>
+
+>>>>>>> develop
     <script src="./scripts/index.js"></script>
+
   </body>
 </html>
