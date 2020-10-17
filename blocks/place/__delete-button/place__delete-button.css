@@ -11,6 +11,8 @@
   background-repeat: no-repeat;
   border-style: none;
   background-color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  transition: opacity .4s linear;
 }
 
 .place__delete-button:hover {
