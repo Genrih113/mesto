@@ -1,12 +1,14 @@
+//переменные отображаемые на странице
 let personEditButton = document.querySelector('.person__edit-button');
 let personName = document.querySelector('.person__name');
 let personPassion = document.querySelector('.person__passion');
 
-let profilePopup = document.querySelector('.profile-popup');
-let profilePopupCloseButton = document.querySelector('.profile-popup__close');
-let profilePopupName = document.querySelector('.profile-popup__name');
-let profilePopupPassion = document.querySelector('.profile-popup__passion');
-let profilePopupForm = document.querySelector('.profile-popup__container');
+//переменные попапа редактирования профиля
+let profilePopup = document.querySelector('.popup_profile');
+let profilePopupCloseButton = document.querySelector('.popup__close_profile');
+let profilePopupName = document.querySelector('.popup__name_profile');
+let profilePopupPassion = document.querySelector('.popup__passion_profile');
+let profilePopupForm = document.querySelector('.popup__container_profile');
 
 function popupToggleFn(popupName) {
   popupName.classList.toggle('popup_opened');
@@ -29,10 +31,13 @@ personEditButton.addEventListener('click', () => {
     personInfoCopyToPopupFn();
   }
   popupToggleFn(profilePopup)});
-/*profilePopupCloseButton.addEventListener('click', () => {
+
+profilePopupCloseButton.addEventListener('click', () => {
   popupToggleFn(profilePopup);
-});*/
+});
+
 profilePopupForm.addEventListener('submit', personInfoCopyToPageFn);
+
 profilePopup.addEventListener('click', () => {
   if (event.target !== event.currentTarget) {
     return;
@@ -41,7 +46,7 @@ profilePopup.addEventListener('click', () => {
 });
 
 
-//next code to 5th sprint
+//далее код относящийся к проектной 5
 const initialCards = [
   {
     name: 'Архыз',
@@ -71,8 +76,8 @@ const initialCards = [
 
 let placeName;
 let placeLink;
-placeName = initialCards[0].name;
-placeLink = initialCards[0].link;
+//placeName = initialCards[0].name;
+//placeLink = initialCards[0].link;
 
 let placeViewPopup = document.querySelector('.popup_place-view');
 const places = document.querySelector('.places');
@@ -104,6 +109,7 @@ function placeInsertInListTop(placeName, placeLink) {
   places.prepend(place);
 }
 
+//размещение на странице карточек описанных в массиве объектов
 for (let i = 0; i < initialCards.length; i++) {
   placeName = initialCards[i].name;
   placeLink = initialCards[i].link;
@@ -112,11 +118,11 @@ for (let i = 0; i < initialCards.length; i++) {
 
 
 let addButton = document.querySelector('.add-button');
-let placePopup = document.querySelector('.place-popup');
-let placePopupCloseButton = document.querySelector('.place-popup__close');
-let placePopupName = document.querySelector('.place-popup__name');
-let placePopupLink = document.querySelector('.place-popup__link');
-let placePopupForm = document.querySelector('.place-popup__container');
+let placePopup = document.querySelector('.popup_place');
+let placePopupCloseButton = document.querySelector('.popup__close_place');
+let placePopupName = document.querySelector('.popup__name_place');
+let placePopupLink = document.querySelector('.popup__link_place');
+let placePopupForm = document.querySelector('.popup__container_place');
 
 function newPlaceCardInsertFn(event) {
   event.preventDefault();
@@ -129,7 +135,7 @@ addButton.addEventListener('click', () => {
   placePopupName.value = '';
   placePopupLink.value = '';
 });
-//placePopupCloseButton.addEventListener('click', () => {popupToggleFn(placePopup)});
+placePopupCloseButton.addEventListener('click', () => {popupToggleFn(placePopup)});
 placePopupForm.addEventListener('submit', newPlaceCardInsertFn);
 placePopup.addEventListener('click', () => {
   if (event.target !== event.currentTarget) {
@@ -139,9 +145,9 @@ placePopup.addEventListener('click', () => {
 });
 
 let placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
-/*placeViewPopupCloseButton.addEventListener('click', () => {
+placeViewPopupCloseButton.addEventListener('click', () => {
   popupToggleFn(placeViewPopup);
-});*/
+});
 
 placeViewPopup.addEventListener('click', () => {
   if (event.target !== event.currentTarget) {
@@ -153,7 +159,8 @@ placeViewPopup.addEventListener('click', () => {
 
 
 
-//one close btn for all popups
+//реализация "общей" кнопки закрытия попапов
+/*
 let closeBtn = document.querySelectorAll('.popup__close');
 console.log(closeBtn);
 console.log(closeBtn[0].parentElement.parentElement);
@@ -162,3 +169,4 @@ for (let i = 0; i < closeBtn.length; i++) {
     popupToggleFn(closeBtn[i].parentElement.parentElement);
   });
 };
+*/
