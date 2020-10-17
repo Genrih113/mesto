@@ -10,43 +10,22 @@ const profilePopupName = document.querySelector('.popup__name_profile');
 const profilePopupPassion = document.querySelector('.popup__passion_profile');
 const profilePopupForm = document.querySelector('.popup__container_profile');
 
-function togglePopup(popupName) {
-  popupName.classList.toggle('popup_opened');
-};
+const places = document.querySelector('.places');
+const placeTemplate = document.querySelector('#place').content;
 
-function copyPersonInfoToPopup() {
-  profilePopupName.value = personName.textContent;
-  profilePopupPassion.value = personPassion.textContent;
-};
+const placeAddButton = document.querySelector('.add-button');
+const placePopup = document.querySelector('.popup_place');
+const placePopupCloseButton = document.querySelector('.popup__close_place');
+const placePopupName = document.querySelector('.popup__name_place');
+const placePopupLink = document.querySelector('.popup__link_place');
+const placePopupForm = document.querySelector('.popup__container_place');
 
-function copyPersonInfoToPage(event) {
-  event.preventDefault();
-  personName.textContent = profilePopupName.value;
-  personPassion.textContent = profilePopupPassion.value;
-  togglePopup(profilePopup);
-};
+const placeViewPopup = document.querySelector('.popup_place-view');
+const placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
 
-personEditButton.addEventListener('click', () => {
-  if (profilePopup.classList.contains('popup_opened') === false) {
-    copyPersonInfoToPopup();
-  }
-  togglePopup(profilePopup)});
+let placeName;
+let placeLink;
 
-profilePopupCloseButton.addEventListener('click', () => {
-  togglePopup(profilePopup);
-});
-
-profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
-
-profilePopup.addEventListener('click', () => {
-  if (event.target !== event.currentTarget) {
-    return;
-  }
-  togglePopup(profilePopup);
-});
-
-
-//далее код относящийся к проектной 5
 const initialCards = [
   {
     name: 'Архыз',
@@ -74,14 +53,21 @@ const initialCards = [
   }
 ];
 
-let placeName;
-let placeLink;
-//placeName = initialCards[0].name;
-//placeLink = initialCards[0].link;
+function togglePopup(popupName) {
+  popupName.classList.toggle('popup_opened');
+}
 
-const placeViewPopup = document.querySelector('.popup_place-view');
-const places = document.querySelector('.places');
-const placeTemplate = document.querySelector('#place').content;
+function copyPersonInfoToPopup() {
+  profilePopupName.value = personName.textContent;
+  profilePopupPassion.value = personPassion.textContent;
+}
+
+function copyPersonInfoToPage(event) {
+  event.preventDefault();
+  personName.textContent = profilePopupName.value;
+  personPassion.textContent = profilePopupPassion.value;
+  togglePopup(profilePopup);
+}
 
 function insertPlaceCardInListTop(placeName, placeLink) {
   const place = placeTemplate.cloneNode(true);
@@ -109,6 +95,12 @@ function insertPlaceCardInListTop(placeName, placeLink) {
   places.prepend(place);
 }
 
+function insertNewPlaceCardFromPopup(event) {
+  event.preventDefault();
+  insertPlaceCardInListTop(placePopupName.value, placePopupLink.value);
+  togglePopup(placePopup);
+}
+
 //размещение на странице карточек описанных в массиве объектов
 for (let i = 0; i < initialCards.length; i++) {
   placeName = initialCards[i].name;
@@ -117,26 +109,36 @@ for (let i = 0; i < initialCards.length; i++) {
 }
 
 
-const placeAddButton = document.querySelector('.add-button');
-const placePopup = document.querySelector('.popup_place');
-const placePopupCloseButton = document.querySelector('.popup__close_place');
-const placePopupName = document.querySelector('.popup__name_place');
-const placePopupLink = document.querySelector('.popup__link_place');
-const placePopupForm = document.querySelector('.popup__container_place');
+personEditButton.addEventListener('click', () => {
+  if (profilePopup.classList.contains('popup_opened') === false) {
+    copyPersonInfoToPopup();
+  }
+  togglePopup(profilePopup)});
 
-function insertNewPlaceCardFromPopup(event) {
-  event.preventDefault();
-  insertPlaceCardInListTop(placePopupName.value, placePopupLink.value);
-  togglePopup(placePopup);
-};
+profilePopupCloseButton.addEventListener('click', () => {
+  togglePopup(profilePopup);
+});
+
+profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
+
+profilePopup.addEventListener('click', () => {
+  if (event.target !== event.currentTarget) {
+    return;
+  }
+  togglePopup(profilePopup);
+});
+
 
 placeAddButton.addEventListener('click', () => {
   togglePopup(placePopup);
   placePopupName.value = '';
   placePopupLink.value = '';
 });
+
 placePopupCloseButton.addEventListener('click', () => {togglePopup(placePopup)});
+
 placePopupForm.addEventListener('submit', insertNewPlaceCardFromPopup);
+
 placePopup.addEventListener('click', () => {
   if (event.target !== event.currentTarget) {
     return;
@@ -144,7 +146,7 @@ placePopup.addEventListener('click', () => {
   togglePopup(placePopup);
 });
 
-const placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
+
 placeViewPopupCloseButton.addEventListener('click', () => {
   togglePopup(placeViewPopup);
 });
