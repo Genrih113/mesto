@@ -1,14 +1,3 @@
-//вставка попапа из темплейта
-/*
-let footer = document.querySelector('.footer');
-let popupTemplate = document.querySelector('#popup').content;
-function popupInsertIntoHTML() {
-  const popup = popupTemplate.cloneNode(true);
-  footer.after(popup);
-}
-popupInsertIntoHTML();
-*/
-
 let personEditButton = document.querySelector('.person__edit-button');
 let personName = document.querySelector('.person__name');
 let personPassion = document.querySelector('.person__passion');
@@ -19,11 +8,8 @@ let profilePopupName = document.querySelector('.profile-popup__name');
 let profilePopupPassion = document.querySelector('.profile-popup__passion');
 let profilePopupForm = document.querySelector('.profile-popup__container');
 
-function profilePopupToggleFn() {
-  if (profilePopup.classList.contains('popup_opened') === false) {
-    personInfoCopyToPopupFn();
-  }
-  profilePopup.classList.toggle('popup_opened');
+function popupToggleFn(popupName) {
+  popupName.classList.toggle('popup_opened');
 };
 
 function personInfoCopyToPopupFn() {
@@ -35,21 +21,24 @@ function personInfoCopyToPageFn(event) {
   event.preventDefault();
   personName.textContent = profilePopupName.value;
   personPassion.textContent = profilePopupPassion.value;
-  profilePopupToggleFn();
+  popupToggleFn(profilePopup);
 };
 
-function profilePopupBackgrClickCloseFn(event) {
+personEditButton.addEventListener('click', () => {
+  if (profilePopup.classList.contains('popup_opened') === false) {
+    personInfoCopyToPopupFn();
+  }
+  popupToggleFn(profilePopup)});
+/*profilePopupCloseButton.addEventListener('click', () => {
+  popupToggleFn(profilePopup);
+});*/
+profilePopupForm.addEventListener('submit', personInfoCopyToPageFn);
+profilePopup.addEventListener('click', () => {
   if (event.target !== event.currentTarget) {
     return;
   }
-  profilePopupToggleFn();
-};
-
-personEditButton.addEventListener('click', profilePopupToggleFn);
-profilePopupCloseButton.addEventListener('click', profilePopupToggleFn);
-profilePopupForm.addEventListener('submit', personInfoCopyToPageFn);
-profilePopup.addEventListener('click', profilePopupBackgrClickCloseFn);
-
+  popupToggleFn(profilePopup);
+});
 
 
 //next code to 5th sprint
@@ -110,7 +99,7 @@ function placeInsertInListTop(placeName, placeLink) {
     placeViewPopup.classList.toggle('popup_opened');
     placeViewPopup.querySelector('.popup__place-image').src = placeLink;
     placeViewPopup.querySelector('.popup__place-caption').textContent = placeName;
-  })
+  });
 
   places.prepend(place);
 }
@@ -129,54 +118,47 @@ let placePopupName = document.querySelector('.place-popup__name');
 let placePopupLink = document.querySelector('.place-popup__link');
 let placePopupForm = document.querySelector('.place-popup__container');
 
-
-function placePopupToggleFn() {
-  placePopup.classList.toggle('popup_opened');
-  placePopupName.value = '';
-  placePopupLink.value = '';
-};
-
-
 function newPlaceCardInsertFn(event) {
   event.preventDefault();
   placeInsertInListTop(placePopupName.value, placePopupLink.value);
-  placePopupToggleFn();
+  popupToggleFn(placePopup);
 };
 
-function placePopupBackgrClickCloseFn(event) {
+addButton.addEventListener('click', () => {
+  popupToggleFn(placePopup);
+  placePopupName.value = '';
+  placePopupLink.value = '';
+});
+//placePopupCloseButton.addEventListener('click', () => {popupToggleFn(placePopup)});
+placePopupForm.addEventListener('submit', newPlaceCardInsertFn);
+placePopup.addEventListener('click', () => {
   if (event.target !== event.currentTarget) {
     return;
   }
-  placePopupToggleFn();
-};
-
-addButton.addEventListener('click', placePopupToggleFn);
-placePopupCloseButton.addEventListener('click', placePopupToggleFn);
-placePopupForm.addEventListener('submit', newPlaceCardInsertFn);
-placePopup.addEventListener('click', placePopupBackgrClickCloseFn);
+  popupToggleFn(placePopup);
+});
 
 let placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
-placeViewPopupCloseButton.addEventListener('click', function placeViewPopupCloseFn() {
-  placeViewPopup.classList.toggle('popup_opened');
-})
+/*placeViewPopupCloseButton.addEventListener('click', () => {
+  popupToggleFn(placeViewPopup);
+});*/
+
+placeViewPopup.addEventListener('click', () => {
+  if (event.target !== event.currentTarget) {
+    return;
+  }
+  popupToggleFn(placeViewPopup);
+});
 
 
 
 
-
-/*
-let placeDeleteButtons = document.querySelectorAll('.place__delete-button');
-for (let i = 0; i < placeDeleteButtons.length; i++) {
-  placeDeleteButtons[i].addEventListener('click', function placeDeleteFn() {
-    placeDeleteButtons[i].parentElement.remove();
+//one close btn for all popups
+let closeBtn = document.querySelectorAll('.popup__close');
+console.log(closeBtn);
+console.log(closeBtn[0].parentElement.parentElement);
+for (let i = 0; i < closeBtn.length; i++) {
+  closeBtn[i].addEventListener('click', () => {
+    popupToggleFn(closeBtn[i].parentElement.parentElement);
   });
-}
-*/
-/*
-let placeLikeButtons = document.querySelectorAll('.place__like-button');
-for (let i = 0; i < placeLikeButtons.length; i++) {
-  placeLikeButtons[i].addEventListener('click', function placeLikedFn() {
-    placeLikeButtons[i].classList.toggle('place__like-button_marked');
-  });
-}
-*/
+};
