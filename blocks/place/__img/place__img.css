@@ -1,5 +1,18 @@
+/*
 .place__img {
   width: 100%;
   border-radius: 10px 10px 0 0;
+  object-fit: cover;
+}
+*/
+
+.place__img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
   object-fit: cover;
 }
