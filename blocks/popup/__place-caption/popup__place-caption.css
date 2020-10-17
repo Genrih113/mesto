@@ -3,8 +3,11 @@
   font-size: 12px;
   line-height: 15px;
   font-weight: 400;
-  width: 100%;
   position: absolute;
   left: 0;
   bottom: -25px;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

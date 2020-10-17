@@ -2,6 +2,7 @@
 const personEditButton = document.querySelector('.person__edit-button');
 const personName = document.querySelector('.person__name');
 const personPassion = document.querySelector('.person__passion');
+const placeAddButton = document.querySelector('.add-button');
 
 //переменные попапа редактирования профиля
 const profilePopup = document.querySelector('.popup_profile');
@@ -10,16 +11,18 @@ const profilePopupName = document.querySelector('.popup__name_profile');
 const profilePopupPassion = document.querySelector('.popup__passion_profile');
 const profilePopupForm = document.querySelector('.popup__container_profile');
 
+//переменные-ссылки для создания и размещения разметки карточки
 const places = document.querySelector('.places');
 const placeTemplate = document.querySelector('#place').content;
 
-const placeAddButton = document.querySelector('.add-button');
+//переменные попапа добавления карточки
 const placePopup = document.querySelector('.popup_place');
 const placePopupCloseButton = document.querySelector('.popup__close_place');
 const placePopupName = document.querySelector('.popup__name_place');
 const placePopupLink = document.querySelector('.popup__link_place');
 const placePopupForm = document.querySelector('.popup__container_place');
 
+//переменные попапа для просмотра фото
 const placeViewPopup = document.querySelector('.popup_place-view');
 const placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
 
@@ -157,16 +160,3 @@ placeViewPopup.addEventListener('click', () => {
   }
   togglePopup(placeViewPopup);
 });
-
-
-//реализация "общей" кнопки закрытия попапов
-/*
-let closeBtn = document.querySelectorAll('.popup__close');
-console.log(closeBtn);
-console.log(closeBtn[0].parentElement.parentElement);
-for (let i = 0; i < closeBtn.length; i++) {
-  closeBtn[i].addEventListener('click', () => {
-    togglePopup(closeBtn[i].closest('.popup_place'));
-  });
-};
-*/

@@ -1,8 +1,5 @@
 .popup_place-view {
-  /*flex-direction: column;*/
   margin: 0;
   padding: 0;
   background-color: rgba(0, 0, 0, .9);
-  /*justify-content: center;
-  align-items: center;*/
 }
