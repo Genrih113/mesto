@@ -79,12 +79,12 @@ function copyPersonInfoToPage(event) {
   togglePopup(profilePopup);
 }
 
-function insertPlaceCardInListTop(placeName, placeLink) {
+
+
+function createPlaceCard(placeName, placeLink) {
   const place = placeTemplate.cloneNode(true);
   const placeImageButton = place.querySelector('.place__img');
   place.querySelector('.place__title').textContent = placeName;
-  //place.querySelector('.place__img').alt = placeName;
-  //place.querySelector('.place__img').src = placeLink;
   placeImageButton.alt = placeName;
   placeImageButton.src = placeLink;
 
@@ -99,33 +99,26 @@ function insertPlaceCardInListTop(placeName, placeLink) {
   });
 
   placeImageButton.addEventListener('click', function viewPlaceCard() {
-//    placeViewPopup.classList.toggle('popup_opened');
-    togglePopup(placeViewPopup);
     placeViewPopup.querySelector('.popup__place-image').src = placeLink;
     placeViewPopup.querySelector('.popup__place-caption').textContent = placeName;
+    togglePopup(placeViewPopup);
   });
 
-  places.prepend(place);
+  return place;
 }
 
-function insertNewPlaceCardFromPopup(event) {
-  event.preventDefault();
-  insertPlaceCardInListTop(placePopupName.value, placePopupLink.value);
-  togglePopup(placePopup);
+function insertPlaceCard(card) {
+  places.prepend(card);
 }
 
 //размещение на странице карточек описанных в массиве объектов
-for (let i = 0; i < initialCards.length; i++) {
-  placeName = initialCards[i].name;
-  placeLink = initialCards[i].link;
-  insertPlaceCardInListTop(placeName, placeLink);
-}
-
+initialCards.forEach(({ name, link }) => {
+  const card = createPlaceCard(name, link);
+  insertPlaceCard(card);
+});
 
 personEditButton.addEventListener('click', () => {
-//  if (profilePopup.classList.contains('popup_opened') === false) {
   copyPersonInfoToPopup();
-//  }
   togglePopup(profilePopup)
 });
 
@@ -137,19 +130,21 @@ profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
 
 profilePopup.addEventListener('click', closePopupByClickOverlay);
 
-
 placeAddButton.addEventListener('click', () => {
-  togglePopup(placePopup);
   placePopupName.value = '';
   placePopupLink.value = '';
+  togglePopup(placePopup);
 });
 
 placePopupCloseButton.addEventListener('click', () => {togglePopup(placePopup)});
 
-placePopupForm.addEventListener('submit', insertNewPlaceCardFromPopup);
+placePopupForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  insertPlaceCard(createPlaceCard(placePopupName.value, placePopupLink.value));
+  togglePopup(placePopup);
+});
 
 placePopup.addEventListener('click', closePopupByClickOverlay);
-
 
 placeViewPopupCloseButton.addEventListener('click', () => {
   togglePopup(placeViewPopup);
