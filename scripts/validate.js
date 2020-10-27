@@ -24,7 +24,9 @@ function hasInvalidInput(inputElements) {
   });
 }
 
-function toggleButtonState(inputElements, button) {
+function toggleButtonState(form, inputElements) {
+  const button = form.querySelector('.popup__submit');
+
   if (hasInvalidInput(inputElements)) {
     button.disabled = true;
   } else {
@@ -40,15 +42,14 @@ function validateForms() {
       evt.preventDefault()
     });
 
-    const button = form.querySelector('.popup__submit');
     const inputElements = Array.from(form.querySelectorAll('.popup__input'));
 
-    toggleButtonState(inputElements, button);
+    toggleButtonState(form, inputElements);
 
     inputElements.forEach((input) => {
       addEventListener('input', () => {
         isValid(form, input);
-        toggleButtonState(inputElements, button);
+        toggleButtonState(form, inputElements);
       });
     });
   });
