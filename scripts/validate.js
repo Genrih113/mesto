@@ -1,3 +1,12 @@
+const selectorsForValidation = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_state_error',
+  errorClass: 'error'
+};
+
 function showInputError(form, input) {
   input.classList.add('popup__input_state_error');
   const errorElement = form.querySelector(`#${input.id}-error`);
