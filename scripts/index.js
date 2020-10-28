@@ -57,6 +57,14 @@ const initialCards = [
 ];
 
 function togglePopup(popupName) {
+  const spanElements = Array.from(popupName.querySelectorAll('.error'));
+  spanElements.forEach((span) => {
+    span.textContent = '';
+  });
+  const inputElements = Array.from(popupName.querySelectorAll('.popup__input'));
+  inputElements.forEach((input) => {
+    input.classList.remove('popup__input_state_error');
+  });
   popupName.classList.toggle('popup_opened');
 }
 

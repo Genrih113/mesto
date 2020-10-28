@@ -29,8 +29,10 @@ function toggleButtonState(form, inputElements) {
 
   if (hasInvalidInput(inputElements)) {
     button.disabled = true;
+    button.classList.add('popup__submit_disabled');
   } else {
     button.disabled = false;
+    button.classList.remove('popup__submit_disabled');
   }
 }
 
@@ -47,7 +49,7 @@ function validateForms() {
     toggleButtonState(form, inputElements);
 
     inputElements.forEach((input) => {
-      addEventListener('input', () => {
+      input.addEventListener('input', () => {
         isValid(form, input);
         toggleButtonState(form, inputElements);
       });
