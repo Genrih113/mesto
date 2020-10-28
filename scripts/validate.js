@@ -67,3 +67,14 @@ function validateForms() {
 }
 
 validateForms();
+
+function clearPopupFromErrors(markupElement) {
+  const spanElements = Array.from(markupElement.querySelectorAll('.error'));
+  spanElements.forEach((span) => {
+    span.textContent = '';
+  });
+  const inputElements = Array.from(markupElement.querySelectorAll('.popup__input'));
+  inputElements.forEach((input) => {
+    input.classList.remove('popup__input_state_error');
+  });
+}
