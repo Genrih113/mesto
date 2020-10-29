@@ -57,7 +57,11 @@ const initialCards = [
 ];
 
 function togglePopup(popupName) {
-  clearPopupFromErrors(popupName);
+  if (!popupName.classList.contains('popup_opened')) {
+    document.addEventListener('keydown',closePopupByEsc);
+  } else {
+    document.removeEventListener('keydown',closePopupByEsc);
+  }
   popupName.classList.toggle('popup_opened');
 }
 
@@ -66,6 +70,12 @@ function closePopupByClickOverlay(event) {
       return;
   }
   togglePopup(event.target);
+}
+
+function closePopupByEsc(evt) {
+  if (evt.key === 'Escape') {
+    togglePopup(document.querySelector('.popup_opened'));
+  }
 }
 
 function copyPersonInfoToPopup() {
@@ -120,7 +130,8 @@ initialCards.forEach(({ name, link }) => {
 
 personEditButton.addEventListener('click', () => {
   copyPersonInfoToPopup();
-  togglePopup(profilePopup)
+  clearPopupFromErrors(profilePopup);
+  togglePopup(profilePopup);
 });
 
 profilePopupCloseButton.addEventListener('click', () => {
@@ -134,6 +145,7 @@ profilePopup.addEventListener('click', closePopupByClickOverlay);
 placeAddButton.addEventListener('click', () => {
   placePopupName.value = '';
   placePopupLink.value = '';
+  clearPopupFromErrors(placePopup);
   togglePopup(placePopup);
 });
 

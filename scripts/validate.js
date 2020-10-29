@@ -78,7 +78,38 @@ function clearPopupFromErrors(markupElement) {
   inputElements.forEach((input) => {
     input.classList.remove('popup__input_state_error');
   });
-  const button = markupElement.querySelector('.popup__submit');
-  button.disabled = true;
-  button.classList.add('popup__submit_disabled');
+  const submitButton = markupElement.querySelector('.popup__submit');
+  submitButton.disabled = true;
+  submitButton.classList.add('popup__submit_disabled');
 }
+
+
+function f1 () {
+  console.log(first);
+}
+
+function f2 (first) {
+  console.log();
+  f1(first);
+}
+
+function f3 ({
+  first,
+  second,
+  third}) {
+  console.log(third);
+  f2(first);
+}
+/*
+f3({
+  first: 'первый',
+  second: 'второй',
+  third: 'третий'
+});
+*/
+
+f3 ({
+  first: 'первый',
+  second: 'второй',
+  third: 'третий'
+});
