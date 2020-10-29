@@ -130,7 +130,7 @@ initialCards.forEach(({ name, link }) => {
 
 personEditButton.addEventListener('click', () => {
   copyPersonInfoToPopup();
-  clearPopupFromErrors(profilePopup);
+  //clearPopupFromErrors(profilePopup);
   togglePopup(profilePopup);
 });
 
@@ -145,7 +145,7 @@ profilePopup.addEventListener('click', closePopupByClickOverlay);
 placeAddButton.addEventListener('click', () => {
   placePopupName.value = '';
   placePopupLink.value = '';
-  clearPopupFromErrors(placePopup);
+  //clearPopupFromErrors(placePopup);
   togglePopup(placePopup);
 });
 

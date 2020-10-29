@@ -36,7 +36,31 @@ function toggleButtonState(form, inputElements) {
   }
 }
 
+
+function clearPopupFromErrors(markupElement) {
+  const spanElements = Array.from(markupElement.querySelectorAll('.error'));
+  spanElements.forEach((span) => {
+    span.textContent = '';
+  });
+  const inputElements = Array.from(markupElement.querySelectorAll('.popup__input'));
+  inputElements.forEach((input) => {
+    input.classList.remove('popup__input_state_error');
+  });
+  const submitButton = markupElement.querySelector('.popup__submit');
+  submitButton.disabled = true;
+  submitButton.classList.add('popup__submit_disabled');
+}
+
 function validateForms() {
+
+  personEditButton.addEventListener('click', () => {
+    clearPopupFromErrors(profilePopup);
+  });
+
+  placeAddButton.addEventListener('click', () => {
+    clearPopupFromErrors(placePopup);
+  });
+
   const formElements = Array.from(document.querySelectorAll('.popup__container'));
 
   formElements.forEach((form) => {
@@ -69,36 +93,23 @@ function validateForms() {
 
 validateForms();
 
-function clearPopupFromErrors(markupElement) {
-  const spanElements = Array.from(markupElement.querySelectorAll('.error'));
-  spanElements.forEach((span) => {
-    span.textContent = '';
-  });
-  const inputElements = Array.from(markupElement.querySelectorAll('.popup__input'));
-  inputElements.forEach((input) => {
-    input.classList.remove('popup__input_state_error');
-  });
-  const submitButton = markupElement.querySelector('.popup__submit');
-  submitButton.disabled = true;
-  submitButton.classList.add('popup__submit_disabled');
-}
 
 
-function f1 () {
+function f1 ({first}) {
   console.log(first);
 }
 
-function f2 (first) {
-  console.log();
-  f1(first);
+function f2 ({first, ...rest}) {
+  console.log(first);
+  f1(rest);
 }
 
 function f3 ({
-  first,
-  second,
-  third}) {
+  third,
+...rest}) {
   console.log(third);
-  f2(first);
+  console.log(rest);
+  f2(rest);
 }
 /*
 f3({
