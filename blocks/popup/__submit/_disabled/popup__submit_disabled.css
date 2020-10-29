@@ -4,3 +4,8 @@
   opacity: .2;
   color: #000;
 }
+
+.popup__submit_disabled:hover {
+  cursor: default;
+  opacity: .2;
+}
