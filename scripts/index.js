@@ -13,7 +13,7 @@ const profilePopupForm = document.querySelector('.popup__container_profile');
 
 //переменные-ссылки для создания и размещения разметки карточки
 const places = document.querySelector('.places');
-const placeTemplate = document.querySelector('#place').content;
+//const placeTemplate = document.querySelector('#place').content;
 
 //переменные попапа добавления карточки
 const placePopup = document.querySelector('.popup_place');
@@ -91,7 +91,7 @@ function copyPersonInfoToPage(event) {
 }
 
 
-
+/*
 function createPlaceCard(placeName, placeLink) {
   const place = placeTemplate.cloneNode(true);
   const placeImageButton = place.querySelector('.place__img');
@@ -117,15 +117,94 @@ function createPlaceCard(placeName, placeLink) {
 
   return place;
 }
+*/
+
+class Card {
+  constructor(placeName, placeLink, selector) {
+    this.placeName = placeName;
+    this.placeLink = placeLink;
+    this.selector = selector;
+  }
+
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this.selector)
+      .content
+      .cloneNode(true);
+    return cardElement;
+  }
+
+  _setCardDeleteFunc() {
+    this.placeDeleteButton.addEventListener('click', () => {
+      this.placeDeleteButton.parentElement.remove();
+    });
+  }
+
+  _setCardLikeFunc() {
+    this.placeLikeButton.addEventListener('click', () => {
+      this.placeLikeButton.classList.toggle('place__like-button_liked');
+    });
+  }
+
+  _setCardImgViewFunc() {
+    this.placeImageButton.addEventListener('click', () => {
+      placeViewPopup.querySelector('.popup__place-image').src = this.placeLink;
+      placeViewPopup.querySelector('.popup__place-caption').textContent = this.placeName;
+      togglePopup(placeViewPopup);
+    });
+  }
+
+  createCard() {
+
+    this.place = this._getTemplate();
+    console.log(this.place);
+    this.placeDeleteButton = this.place.querySelector('.place__delete-button');
+    this.placeLikeButton = this.place.querySelector('.place__like-button');
+    this.placeImageButton = this.place.querySelector('.place__img');
+    this.place.querySelector('.place__title').textContent = this.placeName;
+    this.placeImageButton.alt = this.placeName;
+    this.placeImageButton.src = this.placeLink;
+
+    this._setCardDeleteFunc();
+    this._setCardLikeFunc();
+    this._setCardImgViewFunc();
+    return this.place;
+
+    /*
+    const placeDeleteButton = this.place.querySelector('.place__delete-button');
+    placeDeleteButton.addEventListener('click', function deletePlaceCard() {
+      placeDeleteButton.parentElement.remove();
+    });
+    */
+
+    /*const placeLikeButton = this.place.querySelector('.place__like-button');
+    placeLikeButton.addEventListener('click', function likePlaceCard() {
+      placeLikeButton.classList.toggle('place__like-button_liked');
+    });*/
+
+    /*placeImageButton.addEventListener('click', function viewPlaceCard() {
+      placeViewPopup.querySelector('.popup__place-image').src = this.placeLink;
+      placeViewPopup.querySelector('.popup__place-caption').textContent = this.placeName;
+      togglePopup(placeViewPopup);
+    });*/
+  }
+}
 
 function insertPlaceCard(card) {
   places.prepend(card);
 }
 
 //размещение на странице карточек описанных в массиве объектов
+/*
 initialCards.forEach(({ name, link }) => {
   const card = createPlaceCard(name, link);
   insertPlaceCard(card);
+});
+*/
+
+initialCards.forEach(({ name, link }) => {
+  const card = new Card(name, link, '#place');
+  insertPlaceCard(card.createCard());
 });
 
 personEditButton.addEventListener('click', () => {
@@ -151,7 +230,7 @@ placePopupCloseButton.addEventListener('click', () => {togglePopup(placePopup)})
 
 placePopupForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  insertPlaceCard(createPlaceCard(placePopupName.value, placePopupLink.value));
+  insertPlaceCard((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
   togglePopup(placePopup);
 });
 
@@ -162,3 +241,36 @@ placeViewPopupCloseButton.addEventListener('click', () => {
 });
 
 placeViewPopup.addEventListener('click', closePopupByClickOverlay);
+
+
+
+
+
+// class Parent {
+//   constructor(a, b, c) {
+//     this.a = a;
+//     this.b = b;
+//     this.c = c;
+//    // this.d = '5th';
+//   }
+
+//   consoleFn() {
+//     console.log(this.d);
+//   }
+
+//   consoleFn2() {
+//     this.d = '4th arg';
+//     console.log(this.a + this.b + this.c + this.d);
+//     this.consoleFn();
+//   }
+
+//   consoleFn3() {
+//     console.log(this.a + this.b + this.c+ this.d);
+//     this.consoleFn();
+//   }
+// }
+
+// const parent = new Parent('1', '2', '3');
+// parent.consoleFn();
+// parent.consoleFn2();
+// //parent.consoleFn3();
