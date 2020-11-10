@@ -121,72 +121,62 @@ function createPlaceCard(placeName, placeLink) {
 
 class Card {
   constructor(placeName, placeLink, selector) {
-    this.placeName = placeName;
-    this.placeLink = placeLink;
-    this.selector = selector;
+    this._placeName = placeName;
+    this._placeLink = placeLink;
+    this._selector = selector;
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector(this.selector)
+      .querySelector(this._selector)
       .content
+      .querySelector('.place')
       .cloneNode(true);
     return cardElement;
   }
 
-  _setCardDeleteFunc() {
-    this.placeDeleteButton.addEventListener('click', () => {
-      this.placeDeleteButton.parentElement.remove();
+  _handleDeleteClick() {
+    this._place.remove();
+  }
+
+  _handleLikeClick() {
+    this._place.querySelector('.place__like-button').classList.toggle('place__like-button_liked');
+  }
+
+  _handleImgClick() {
+    placeViewPopup.querySelector('.popup__place-image').src = this._placeLink;
+    placeViewPopup.querySelector('.popup__place-caption').textContent = this._placeName;
+    togglePopup(placeViewPopup);
+  }
+
+  _setDeleteListener() {
+    this._place.querySelector('.place__delete-button').addEventListener('click', () => {
+      this._handleDeleteClick();
     });
   }
 
-  _setCardLikeFunc() {
-    this.placeLikeButton.addEventListener('click', () => {
-      this.placeLikeButton.classList.toggle('place__like-button_liked');
+  _setLikeListener() {
+    this._place.querySelector('.place__like-button').addEventListener('click', () => {
+      this._handleLikeClick();
     });
   }
 
-  _setCardImgViewFunc() {
-    this.placeImageButton.addEventListener('click', () => {
-      placeViewPopup.querySelector('.popup__place-image').src = this.placeLink;
-      placeViewPopup.querySelector('.popup__place-caption').textContent = this.placeName;
-      togglePopup(placeViewPopup);
+  _setImgListener() {
+    this._place.querySelector('.place__img').addEventListener('click', () => {
+      this._handleImgClick();
     });
   }
 
   createCard() {
+    this._place = this._getTemplate();
+    this._place.querySelector('.place__title').textContent = this._placeName;
+    this._place.querySelector('.place__img').alt = this._placeName;
+    this._place.querySelector('.place__img').src = this._placeLink;
 
-    this.place = this._getTemplate();
-    console.log(this.place);
-    this.placeDeleteButton = this.place.querySelector('.place__delete-button');
-    this.placeLikeButton = this.place.querySelector('.place__like-button');
-    this.placeImageButton = this.place.querySelector('.place__img');
-    this.place.querySelector('.place__title').textContent = this.placeName;
-    this.placeImageButton.alt = this.placeName;
-    this.placeImageButton.src = this.placeLink;
-
-    this._setCardDeleteFunc();
-    this._setCardLikeFunc();
-    this._setCardImgViewFunc();
-    return this.place;
-
-    /*
-    const placeDeleteButton = this.place.querySelector('.place__delete-button');
-    placeDeleteButton.addEventListener('click', function deletePlaceCard() {
-      placeDeleteButton.parentElement.remove();
-    });
-    */
-
-    /*const placeLikeButton = this.place.querySelector('.place__like-button');
-    placeLikeButton.addEventListener('click', function likePlaceCard() {
-      placeLikeButton.classList.toggle('place__like-button_liked');
-    });*/
-
-    /*placeImageButton.addEventListener('click', function viewPlaceCard() {
-      placeViewPopup.querySelector('.popup__place-image').src = this.placeLink;
-      placeViewPopup.querySelector('.popup__place-caption').textContent = this.placeName;
-      togglePopup(placeViewPopup);
-    });*/
+    this._setDeleteListener();
+    this._setLikeListener();
+    this._setImgListener();
+    return this._place;
   }
 }
 
@@ -241,36 +231,3 @@ placeViewPopupCloseButton.addEventListener('click', () => {
 });
 
 placeViewPopup.addEventListener('click', closePopupByClickOverlay);
-
-
-
-
-
-// class Parent {
-//   constructor(a, b, c) {
-//     this.a = a;
-//     this.b = b;
-//     this.c = c;
-//    // this.d = '5th';
-//   }
-
-//   consoleFn() {
-//     console.log(this.d);
-//   }
-
-//   consoleFn2() {
-//     this.d = '4th arg';
-//     console.log(this.a + this.b + this.c + this.d);
-//     this.consoleFn();
-//   }
-
-//   consoleFn3() {
-//     console.log(this.a + this.b + this.c+ this.d);
-//     this.consoleFn();
-//   }
-// }
-
-// const parent = new Parent('1', '2', '3');
-// parent.consoleFn();
-// parent.consoleFn2();
-// //parent.consoleFn3();
