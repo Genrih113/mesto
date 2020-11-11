@@ -1,3 +1,7 @@
+import {Card} from './card.js';
+
+export {personEditButton, placeAddButton, placePopup, profilePopup, placeViewPopup, togglePopup};
+
 //переменные отображаемые на странице
 const personEditButton = document.querySelector('.person__edit-button');
 const personName = document.querySelector('.person__name');
@@ -119,6 +123,7 @@ function createPlaceCard(placeName, placeLink) {
 }
 */
 
+/*
 class Card {
   constructor(placeName, placeLink, selector) {
     this._placeName = placeName;
@@ -179,6 +184,9 @@ class Card {
     return this._place;
   }
 }
+*/
+
+
 
 function insertPlaceCard(card) {
   places.prepend(card);

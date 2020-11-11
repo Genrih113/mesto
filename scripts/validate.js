@@ -1,3 +1,5 @@
+import {personEditButton, placeAddButton, placePopup, profilePopup} from './index.js';
+
 function showInputError(form, input, inputErrorClass) {
   input.classList.add(inputErrorClass);
   const errorElement = form.querySelector(`#${input.id}-error`);
