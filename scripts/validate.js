@@ -1,5 +1,3 @@
-import {personEditButton, placeAddButton, placePopup, profilePopup} from './index.js';
-
 export class FormValidator {
   constructor({
     formSelector,
@@ -8,14 +6,14 @@ export class FormValidator {
     inactiveButtonClass,
     inputErrorClass,
     errorSelector
-    }, validatedPopupElement) {
+    }, validatedFormElement) {
       this._formSelector = formSelector;
       this._inputSelector = inputSelector;
       this._submitButtonSelector = submitButtonSelector;
       this._inactiveButtonClass = inactiveButtonClass;
       this._inputErrorClass = inputErrorClass;
       this._errorSelector = errorSelector;
-      this._validatedFormElement = validatedPopupElement.querySelector(formSelector);
+      this._validatedFormElement = validatedFormElement;
   }
 
   _showInputError(input) {
@@ -90,26 +88,3 @@ export class FormValidator {
     });
   }
 }
-
-//validateForms({
-const formsKeys = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_state_error',
-  errorSelector: '.error'
-};
-
-const profileValidator = new FormValidator(formsKeys, profilePopup);
-const placeValidator = new FormValidator(formsKeys, placePopup);
-
-personEditButton.addEventListener('click', () => {
-  profileValidator.clearPopupFromErrors();
-});
-profileValidator.validateForm();
-
-placeAddButton.addEventListener('click', () => {
-  placeValidator.clearPopupFromErrors();
-});
-placeValidator.validateForm();

@@ -1,6 +1,8 @@
 import {Card} from './card.js';
 
-export {personEditButton, placeAddButton, placePopup, profilePopup, placeViewPopup, togglePopup};
+import {FormValidator} from './validate.js';
+
+export {placeViewPopup, togglePopup};
 
 //переменные отображаемые на странице
 const personEditButton = document.querySelector('.person__edit-button');
@@ -32,6 +34,21 @@ const placeViewPopupCloseButton = document.querySelector('.popup__close_place-vi
 
 let placeName;
 let placeLink;
+
+const keysForFormValidate = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_state_error',
+  errorSelector: '.error'
+};
+
+const profileValidator = new FormValidator(keysForFormValidate, profilePopupForm);
+const placeValidator = new FormValidator(keysForFormValidate, placePopupForm);
+
+
+
 
 const initialCards = [
   {
@@ -205,8 +222,12 @@ initialCards.forEach(({ name, link }) => {
   insertPlaceCard(card.createCard());
 });
 
+profileValidator.validateForm();
+placeValidator.validateForm();
+
 personEditButton.addEventListener('click', () => {
   copyPersonInfoToPopup();
+  profileValidator.clearPopupFromErrors();
   togglePopup(profilePopup);
 });
 
@@ -221,6 +242,7 @@ profilePopup.addEventListener('click', closePopupByClickOverlay);
 placeAddButton.addEventListener('click', () => {
   placePopupName.value = '';
   placePopupLink.value = '';
+  placeValidator.clearPopupFromErrors();
   togglePopup(placePopup);
 });
 
