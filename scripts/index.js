@@ -32,9 +32,6 @@ const placePopupForm = document.querySelector('.popup__container_place');
 const placeViewPopup = document.querySelector('.popup_place-view');
 const placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
 
-let placeName;
-let placeLink;
-
 const keysForFormValidate = {
   formSelector: '.popup__container',
   inputSelector: '.popup__input',
@@ -46,9 +43,6 @@ const keysForFormValidate = {
 
 const profileValidator = new FormValidator(keysForFormValidate, profilePopupForm);
 const placeValidator = new FormValidator(keysForFormValidate, placePopupForm);
-
-
-
 
 const initialCards = [
   {

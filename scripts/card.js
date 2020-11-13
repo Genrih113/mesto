@@ -51,8 +51,9 @@ export class Card {
   createCard() {
     this._place = this._getTemplate();
     this._place.querySelector('.place__title').textContent = this._placeName;
-    this._place.querySelector('.place__img').alt = this._placeName;
-    this._place.querySelector('.place__img').src = this._placeLink;
+    this._placeImageElement = this._place.querySelector('.place__img')
+    this._placeImageElement.alt = this._placeName;
+    this._placeImageElement.src = this._placeLink;
 
     this._setDeleteListener();
     this._setLikeListener();
