@@ -1,4 +1,4 @@
-import {placeViewPopup, togglePopup} from './index.js';
+import {placeViewPopup, openPopup} from './index.js';
 
 export class Card {
   constructor(placeName, placeLink, selector) {
@@ -27,7 +27,7 @@ export class Card {
   _handleImgClick() {
     placeViewPopup.querySelector('.popup__place-image').src = this._placeLink;
     placeViewPopup.querySelector('.popup__place-caption').textContent = this._placeName;
-    togglePopup(placeViewPopup);
+    openPopup(placeViewPopup);
   }
 
   _setDeleteListener() {

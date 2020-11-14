@@ -2,7 +2,7 @@ import {Card} from './card.js';
 
 import {FormValidator} from './validate.js';
 
-export {placeViewPopup, togglePopup};
+export {placeViewPopup, openPopup};
 
 //переменные отображаемые на странице
 const personEditButton = document.querySelector('.person__edit-button');
@@ -19,7 +19,6 @@ const profilePopupForm = document.querySelector('.popup__container_profile');
 
 //переменные-ссылки для создания и размещения разметки карточки
 const places = document.querySelector('.places');
-//const placeTemplate = document.querySelector('#place').content;
 
 //переменные попапа добавления карточки
 const placePopup = document.querySelector('.popup_place');
@@ -71,25 +70,26 @@ const initialCards = [
   }
 ];
 
-function togglePopup(popupName) {
-  if (!popupName.classList.contains('popup_opened')) {
-    document.addEventListener('keydown',closePopupByEsc);
-  } else {
-    document.removeEventListener('keydown',closePopupByEsc);
-  }
-  popupName.classList.toggle('popup_opened');
+function openPopup(popupName) {
+  document.addEventListener('keydown',closePopupByEsc);
+  popupName.classList.add('popup_opened');
+}
+
+function closePopup(popupName) {
+  document.removeEventListener('keydown',closePopupByEsc);
+  popupName.classList.remove('popup_opened');
 }
 
 function closePopupByClickOverlay(event) {
   if (event.target !== event.currentTarget) {
       return;
   }
-  togglePopup(event.target);
+  closePopup(event.target);
 }
 
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
-    togglePopup(document.querySelector('.popup_opened'));
+    closePopup(document.querySelector('.popup_opened'));
   }
 }
 
@@ -102,7 +102,7 @@ function copyPersonInfoToPage(event) {
   event.preventDefault();
   personName.textContent = profilePopupName.value;
   personPassion.textContent = profilePopupPassion.value;
-  togglePopup(profilePopup);
+  closePopup(profilePopup);
 }
 
 function insertPlaceCard(card) {
@@ -121,11 +121,11 @@ placeValidator.validateForm();
 personEditButton.addEventListener('click', () => {
   copyPersonInfoToPopup();
   profileValidator.clearPopupFromErrors();
-  togglePopup(profilePopup);
+  openPopup(profilePopup);
 });
 
 profilePopupCloseButton.addEventListener('click', () => {
-  togglePopup(profilePopup);
+  closePopup(profilePopup);
 });
 
 profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
@@ -136,21 +136,21 @@ placeAddButton.addEventListener('click', () => {
   placePopupName.value = '';
   placePopupLink.value = '';
   placeValidator.clearPopupFromErrors();
-  togglePopup(placePopup);
+  openPopup(placePopup);
 });
 
-placePopupCloseButton.addEventListener('click', () => {togglePopup(placePopup)});
+placePopupCloseButton.addEventListener('click', () => {closePopup(placePopup)});
 
 placePopupForm.addEventListener('submit', (event) => {
   event.preventDefault();
   insertPlaceCard((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
-  togglePopup(placePopup);
+  closePopup(placePopup);
 });
 
 placePopup.addEventListener('click', closePopupByClickOverlay);
 
 placeViewPopupCloseButton.addEventListener('click', () => {
-  togglePopup(placeViewPopup);
+  closePopup(placeViewPopup);
 });
 
 placeViewPopup.addEventListener('click', closePopupByClickOverlay);
