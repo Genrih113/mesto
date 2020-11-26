@@ -1,15 +1,15 @@
 import {placeViewPopup, openPopup} from './index.js';
 
 export class Card {
-  constructor(placeName, placeLink, selector) {
+  constructor(placeName, placeLink, templateSelector) {
     this._placeName = placeName;
     this._placeLink = placeLink;
-    this._selector = selector;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector(this._selector)
+      .querySelector(this._templateSelector)
       .content
       .querySelector('.place')
       .cloneNode(true);

@@ -1,7 +1,6 @@
 import {Card} from './card.js';
-
 import {FormValidator} from './validate.js';
-
+import {Section} from './section.js';
 export {placeViewPopup, openPopup};
 
 //переменные отображаемые на странице
@@ -105,15 +104,40 @@ function copyPersonInfoToPage(event) {
   closePopup(profilePopup);
 }
 
-function insertPlaceCard(card) {
-  places.prepend(card);
+// function insertPlaceCard(card) {
+//   places.prepend(card);
+// }
+
+// //размещение на странице карточек описанных в массиве объектов
+// initialCards.forEach(({ name, link }) => {
+//   const card = new Card(name, link, '#place');
+//   insertPlaceCard(card.createCard());
+// });
+
+
+
+
+function renderer({name, link}, containerSelector) {
+  {
+  // const cardElement = document
+  //   .querySelector('#place')
+  //   .content
+  //   .querySelector('.place')
+  //   .cloneNode(true);
+  // cardElement.querySelector('.place__title').textContent = name;
+  // const placeImageElement = cardElement.querySelector('.place__img');
+  // placeImageElement.alt = name;
+  // placeImageElement.src = link;
+  }
+  const cardElement = new Card(name, link, '#place');
+  const cardsBlock = document.querySelector(containerSelector);
+  cardsBlock.prepend(cardElement.createCard());
 }
 
-//размещение на странице карточек описанных в массиве объектов
-initialCards.forEach(({ name, link }) => {
-  const card = new Card(name, link, '#place');
-  insertPlaceCard(card.createCard());
-});
+const cardsSection = new Section({items: initialCards, renderer}, '.places');
+cardsSection.renderItems();
+
+
 
 profileValidator.validateForm();
 placeValidator.validateForm();
@@ -143,7 +167,7 @@ placePopupCloseButton.addEventListener('click', () => {closePopup(placePopup)});
 
 placePopupForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  insertPlaceCard((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
+  cardsSection.addItem((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
   closePopup(placePopup);
 });
 
