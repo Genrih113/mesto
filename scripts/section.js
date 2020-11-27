@@ -3,7 +3,6 @@ export class Section {
     this.items = items;
     this.renderer = renderer;
     this.containerSelector = containerSelector;
-    console.log(this.containerSelector);
   }
 
   addItem(item) {
@@ -11,7 +10,6 @@ export class Section {
   }
 
   renderItems() {
-    console.log(this.items);
     this.items.forEach(item => this.renderer(item, this.containerSelector));
   }
 }

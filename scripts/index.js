@@ -1,7 +1,8 @@
 import {Card} from './card.js';
 import {FormValidator} from './validate.js';
 import {Section} from './section.js';
-export {placeViewPopup, openPopup};
+import {Popup} from './popup.js';
+export {placeViewPopup};//, openPopup};
 
 //переменные отображаемые на странице
 const personEditButton = document.querySelector('.person__edit-button');
@@ -69,28 +70,28 @@ const initialCards = [
   }
 ];
 
-function openPopup(popupName) {
-  document.addEventListener('keydown',closePopupByEsc);
-  popupName.classList.add('popup_opened');
-}
+// function openPopup(popupName) {
+//   document.addEventListener('keydown',closePopupByEsc);
+//   popupName.classList.add('popup_opened');
+// }
 
-function closePopup(popupName) {
-  document.removeEventListener('keydown',closePopupByEsc);
-  popupName.classList.remove('popup_opened');
-}
+// function closePopup(popupName) {
+//   document.removeEventListener('keydown',closePopupByEsc);
+//   popupName.classList.remove('popup_opened');
+// }
 
-function closePopupByClickOverlay(event) {
-  if (event.target !== event.currentTarget) {
-      return;
-  }
-  closePopup(event.target);
-}
+// function closePopupByClickOverlay(event) {
+//   if (event.target !== event.currentTarget) {
+//       return;
+//   }
+//   closePopup(event.target);
+// }
 
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    closePopup(document.querySelector('.popup_opened'));
-  }
-}
+// function closePopupByEsc(evt) {
+//   if (evt.key === 'Escape') {
+//     closePopup(document.querySelector('.popup_opened'));
+//   }
+// }
 
 function copyPersonInfoToPopup() {
   profilePopupName.value = personName.textContent;
@@ -117,6 +118,8 @@ function copyPersonInfoToPage(event) {
 
 
 
+
+
 function renderer({name, link}, containerSelector) {
   {
   // const cardElement = document
@@ -137,6 +140,16 @@ function renderer({name, link}, containerSelector) {
 const cardsSection = new Section({items: initialCards, renderer}, '.places');
 cardsSection.renderItems();
 
+const profilePopupClass = new Popup('.popup_profile');
+//const placePopupClass = new Popup('.popup_place');
+//const imagePopupClass = new Popup('.popup_place-view');
+console.log(profilePopupClass);
+//profilePopupClass.open();
+
+// function openProfilePopup() {
+//   profilePopupClass.open.bind(profilePopupClass);
+// }
+
 
 
 profileValidator.validateForm();
@@ -145,16 +158,22 @@ placeValidator.validateForm();
 personEditButton.addEventListener('click', () => {
   copyPersonInfoToPopup();
   profileValidator.clearPopupFromErrors();
-  openPopup(profilePopup);
+  //openPopup(profilePopup);
+  profilePopupClass.open();
+  //openProfilePopup();
 });
 
-profilePopupCloseButton.addEventListener('click', () => {
-  closePopup(profilePopup);
-});
+profilePopupClass.setEventListeners();
+//profilePopupClass.setEventListeners(profilePopup);
+
+// profilePopupCloseButton.addEventListener('click', () => {
+// //  closePopup(profilePopup);
+//   profilePopupClass.setEventListeners(profilePopupCloseButton);
+// });
 
 profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
 
-profilePopup.addEventListener('click', closePopupByClickOverlay);
+//profilePopup.addEventListener('click', closePopupByClickOverlay);
 
 placeAddButton.addEventListener('click', () => {
   placePopupName.value = '';
@@ -171,10 +190,10 @@ placePopupForm.addEventListener('submit', (event) => {
   closePopup(placePopup);
 });
 
-placePopup.addEventListener('click', closePopupByClickOverlay);
+//placePopup.addEventListener('click', closePopupByClickOverlay);
 
 placeViewPopupCloseButton.addEventListener('click', () => {
   closePopup(placeViewPopup);
 });
 
-placeViewPopup.addEventListener('click', closePopupByClickOverlay);
+//placeViewPopup.addEventListener('click', closePopupByClickOverlay);
