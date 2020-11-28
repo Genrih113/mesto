@@ -2,6 +2,7 @@ import {Card} from './card.js';
 import {FormValidator} from './validate.js';
 import {Section} from './section.js';
 import {Popup} from './popup.js';
+import { PopupWithForm } from './popupwithform.js';
 export {placeViewPopup};//, openPopup};
 
 //переменные отображаемые на странице
@@ -140,15 +141,28 @@ function renderer({name, link}, containerSelector) {
 const cardsSection = new Section({items: initialCards, renderer}, '.places');
 cardsSection.renderItems();
 
-const profilePopupClass = new Popup('.popup_profile');
-//const placePopupClass = new Popup('.popup_place');
+function submiterForProfile() {
+//  renderer({name: this.inputsInfoObject.popupInputName, link: this.inputsInfoObject.popupInputPassion}, '.places');
+}
+
+const profilePopupClass = new PopupWithForm('.popup_profile', submiterForProfile);
 //const imagePopupClass = new Popup('.popup_place-view');
-console.log(profilePopupClass);
+//console.log(profilePopupClass);
 //profilePopupClass.open();
 
 // function openProfilePopup() {
 //   profilePopupClass.open.bind(profilePopupClass);
 // }
+
+function submiterForPlace() {
+  // cardsSection.addItem((new Card(
+  //   this.inputsInfoObject.popupInputPlace, this.inputsInfoObject.popupInputLink, '#place'))
+  //   .createCard());
+  //  console.log('with_Love');
+  renderer({name: this.inputsInfoObject.popupInputPlace, link: this.inputsInfoObject.popupInputLink}, '.places');
+}
+const placePopupClass = new PopupWithForm('.popup_place', submiterForPlace);
+placePopupClass.setEventListeners();
 
 
 
@@ -171,24 +185,25 @@ profilePopupClass.setEventListeners();
 //   profilePopupClass.setEventListeners(profilePopupCloseButton);
 // });
 
-profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
+//profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
 
 //profilePopup.addEventListener('click', closePopupByClickOverlay);
 
 placeAddButton.addEventListener('click', () => {
-  placePopupName.value = '';
-  placePopupLink.value = '';
+  //placePopupName.value = '';
+  //placePopupLink.value = '';
   placeValidator.clearPopupFromErrors();
-  openPopup(placePopup);
+  //openPopup(placePopup);
+  placePopupClass.open();
 });
 
-placePopupCloseButton.addEventListener('click', () => {closePopup(placePopup)});
+//placePopupCloseButton.addEventListener('click', () => {closePopup(placePopup)});
 
-placePopupForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  cardsSection.addItem((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
-  closePopup(placePopup);
-});
+// placePopupForm.addEventListener('submit', (event) => {
+//   event.preventDefault();
+//   cardsSection.addItem((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
+//   closePopup(placePopup);
+// });
 
 //placePopup.addEventListener('click', closePopupByClickOverlay);
 

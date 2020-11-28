@@ -3,7 +3,6 @@ export class Popup {
     this.popupSelector = popupSelector;
     this.popup = document.querySelector(popupSelector);
     this.popupCloseIcon = this.popup.querySelector('.popup__close');
-    console.log(this.popupCloseIcon);
   }
 
   open() {
@@ -21,11 +20,11 @@ export class Popup {
   }
 
   setEventListeners() {
-    this.popup.addEventListener('click', () => {
-      if (event.target !== event.currentTarget) {
+    this.popup.addEventListener('click', (evt) => {
+      if (evt.target !== evt.currentTarget) {
         return;
       }
-      this.close(event.target);
+      this.close(evt.target);
     });
     this.popupCloseIcon.addEventListener('click', () => {
       this.close();
@@ -34,7 +33,6 @@ export class Popup {
 
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      //this._close(document.querySelector('.popup_opened'));
       this.close();
     }
   }
