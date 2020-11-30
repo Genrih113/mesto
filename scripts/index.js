@@ -4,6 +4,7 @@ import {Section} from './section.js';
 import {Popup} from './popup.js';
 import { PopupWithForm } from './popupwithform.js';
 import { PopupWithImage } from './popupwithimage.js';
+import {UserInfo} from './userinfo.js';
 export {placeViewPopup};//, openPopup};
 
 //переменные отображаемые на странице
@@ -142,8 +143,10 @@ function renderer({name, link}, containerSelector) {
 const cardsSection = new Section({items: initialCards, renderer}, '.places');
 cardsSection.renderItems();
 
+const userInfo = new UserInfo({nameSelector: '.person__name', passionSelector: '.person__passion'});
+
 function submiterForProfile() {
-//  renderer({name: this.inputsInfoObject.popupInputName, link: this.inputsInfoObject.popupInputPassion}, '.places');
+  userInfo.setUserInfo({name: this.inputsInfoObject.popupInputName, passion: this.inputsInfoObject.popupInputPassion});
 }
 
 const profilePopupClass = new PopupWithForm('.popup_profile', submiterForProfile);
@@ -176,9 +179,13 @@ profileValidator.validateForm();
 placeValidator.validateForm();
 
 personEditButton.addEventListener('click', () => {
-  copyPersonInfoToPopup();
+  //copyPersonInfoToPopup();
   profileValidator.clearPopupFromErrors();
   //openPopup(profilePopup);
+  const userData = userInfo.getUserInfo();
+  console.log(userData);
+  profilePopupName.value = userData.name;
+  profilePopupPassion.value = userData.passion;
   profilePopupClass.open();
   //openProfilePopup();
 });
