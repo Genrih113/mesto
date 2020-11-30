@@ -1,10 +1,11 @@
 import {placeViewPopup/*, openPopup*/} from './index.js';
 
 export class Card {
-  constructor(placeName, placeLink, templateSelector) {
+  constructor(placeName, placeLink, templateSelector, handleCardClick) {
     this._placeName = placeName;
     this._placeLink = placeLink;
     this._templateSelector = templateSelector;
+    this.handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -25,9 +26,10 @@ export class Card {
   }
 
   _handleImgClick() {
-    placeViewPopup.querySelector('.popup__place-image').src = this._placeLink;
-    placeViewPopup.querySelector('.popup__place-caption').textContent = this._placeName;
-    openPopup(placeViewPopup);
+    // placeViewPopup.querySelector('.popup__place-image').src = this._placeLink;
+    // placeViewPopup.querySelector('.popup__place-caption').textContent = this._placeName;
+    // openPopup(placeViewPopup);
+    this.handleCardClick();
   }
 
   _setDeleteListener() {

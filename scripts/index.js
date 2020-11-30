@@ -3,6 +3,7 @@ import {FormValidator} from './validate.js';
 import {Section} from './section.js';
 import {Popup} from './popup.js';
 import { PopupWithForm } from './popupwithform.js';
+import { PopupWithImage } from './popupwithimage.js';
 export {placeViewPopup};//, openPopup};
 
 //переменные отображаемые на странице
@@ -133,7 +134,7 @@ function renderer({name, link}, containerSelector) {
   // placeImageElement.alt = name;
   // placeImageElement.src = link;
   }
-  const cardElement = new Card(name, link, '#place');
+  const cardElement = new Card(name, link, '#place', handleCardClick);
   const cardsBlock = document.querySelector(containerSelector);
   cardsBlock.prepend(cardElement.createCard());
 }
@@ -164,7 +165,12 @@ function submiterForPlace() {
 const placePopupClass = new PopupWithForm('.popup_place', submiterForPlace);
 placePopupClass.setEventListeners();
 
+const placeViewPopupClass = new PopupWithImage('.popup_place-view');
+placeViewPopupClass.setEventListeners();
 
+function handleCardClick() {
+  placeViewPopupClass.open(this._placeName, this._placeLink);
+}
 
 profileValidator.validateForm();
 placeValidator.validateForm();
@@ -207,8 +213,8 @@ placeAddButton.addEventListener('click', () => {
 
 //placePopup.addEventListener('click', closePopupByClickOverlay);
 
-placeViewPopupCloseButton.addEventListener('click', () => {
-  closePopup(placeViewPopup);
-});
+// placeViewPopupCloseButton.addEventListener('click', () => {
+//   closePopup(placeViewPopup);
+// });
 
 //placeViewPopup.addEventListener('click', closePopupByClickOverlay);
