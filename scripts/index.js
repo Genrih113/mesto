@@ -1,11 +1,9 @@
 import {Card} from './card.js';
 import {FormValidator} from './validate.js';
 import {Section} from './section.js';
-import {Popup} from './popup.js';
 import { PopupWithForm } from './popupwithform.js';
 import { PopupWithImage } from './popupwithimage.js';
 import {UserInfo} from './userinfo.js';
-export {placeViewPopup};//, openPopup};
 
 //переменные отображаемые на странице
 const personEditButton = document.querySelector('.person__edit-button');
@@ -73,50 +71,7 @@ const initialCards = [
   }
 ];
 
-// function openPopup(popupName) {
-//   document.addEventListener('keydown',closePopupByEsc);
-//   popupName.classList.add('popup_opened');
-// }
 
-// function closePopup(popupName) {
-//   document.removeEventListener('keydown',closePopupByEsc);
-//   popupName.classList.remove('popup_opened');
-// }
-
-// function closePopupByClickOverlay(event) {
-//   if (event.target !== event.currentTarget) {
-//       return;
-//   }
-//   closePopup(event.target);
-// }
-
-// function closePopupByEsc(evt) {
-//   if (evt.key === 'Escape') {
-//     closePopup(document.querySelector('.popup_opened'));
-//   }
-// }
-
-function copyPersonInfoToPopup() {
-  profilePopupName.value = personName.textContent;
-  profilePopupPassion.value = personPassion.textContent;
-}
-
-function copyPersonInfoToPage(event) {
-  event.preventDefault();
-  personName.textContent = profilePopupName.value;
-  personPassion.textContent = profilePopupPassion.value;
-  closePopup(profilePopup);
-}
-
-// function insertPlaceCard(card) {
-//   places.prepend(card);
-// }
-
-// //размещение на странице карточек описанных в массиве объектов
-// initialCards.forEach(({ name, link }) => {
-//   const card = new Card(name, link, '#place');
-//   insertPlaceCard(card.createCard());
-// });
 
 
 
@@ -124,17 +79,6 @@ function copyPersonInfoToPage(event) {
 
 
 function renderer({name, link}, containerSelector) {
-  {
-  // const cardElement = document
-  //   .querySelector('#place')
-  //   .content
-  //   .querySelector('.place')
-  //   .cloneNode(true);
-  // cardElement.querySelector('.place__title').textContent = name;
-  // const placeImageElement = cardElement.querySelector('.place__img');
-  // placeImageElement.alt = name;
-  // placeImageElement.src = link;
-  }
   const cardElement = new Card(name, link, '#place', handleCardClick);
   const cardsBlock = document.querySelector(containerSelector);
   cardsBlock.prepend(cardElement.createCard());
@@ -145,26 +89,19 @@ cardsSection.renderItems();
 
 const userInfo = new UserInfo({nameSelector: '.person__name', passionSelector: '.person__passion'});
 
-function submiterForProfile() {
-  userInfo.setUserInfo({name: this.inputsInfoObject.popupInputName, passion: this.inputsInfoObject.popupInputPassion});
+function submiterForProfile(inputsInfoObject) {
+  userInfo.setUserInfo({name: inputsInfoObject.popupInputName, passion: inputsInfoObject.popupInputPassion});
 }
 
 const profilePopupClass = new PopupWithForm('.popup_profile', submiterForProfile);
-//const imagePopupClass = new Popup('.popup_place-view');
-//console.log(profilePopupClass);
-//profilePopupClass.open();
+profilePopupClass.setEventListeners();
 
-// function openProfilePopup() {
-//   profilePopupClass.open.bind(profilePopupClass);
-// }
-
-function submiterForPlace() {
-  // cardsSection.addItem((new Card(
-  //   this.inputsInfoObject.popupInputPlace, this.inputsInfoObject.popupInputLink, '#place'))
-  //   .createCard());
-  //  console.log('with_Love');
-  renderer({name: this.inputsInfoObject.popupInputPlace, link: this.inputsInfoObject.popupInputLink}, '.places');
+function submiterForPlace(inputsInfoObject) {
+  cardsSection.addItem((new Card(
+    inputsInfoObject.popupInputPlace, inputsInfoObject.popupInputLink, '#place', handleCardClick))
+    .createCard());
 }
+
 const placePopupClass = new PopupWithForm('.popup_place', submiterForPlace);
 placePopupClass.setEventListeners();
 
@@ -179,49 +116,14 @@ profileValidator.validateForm();
 placeValidator.validateForm();
 
 personEditButton.addEventListener('click', () => {
-  //copyPersonInfoToPopup();
   profileValidator.clearPopupFromErrors();
-  //openPopup(profilePopup);
   const userData = userInfo.getUserInfo();
-  console.log(userData);
   profilePopupName.value = userData.name;
   profilePopupPassion.value = userData.passion;
   profilePopupClass.open();
-  //openProfilePopup();
 });
-
-profilePopupClass.setEventListeners();
-//profilePopupClass.setEventListeners(profilePopup);
-
-// profilePopupCloseButton.addEventListener('click', () => {
-// //  closePopup(profilePopup);
-//   profilePopupClass.setEventListeners(profilePopupCloseButton);
-// });
-
-//profilePopupForm.addEventListener('submit', copyPersonInfoToPage);
-
-//profilePopup.addEventListener('click', closePopupByClickOverlay);
 
 placeAddButton.addEventListener('click', () => {
-  //placePopupName.value = '';
-  //placePopupLink.value = '';
   placeValidator.clearPopupFromErrors();
-  //openPopup(placePopup);
   placePopupClass.open();
 });
-
-//placePopupCloseButton.addEventListener('click', () => {closePopup(placePopup)});
-
-// placePopupForm.addEventListener('submit', (event) => {
-//   event.preventDefault();
-//   cardsSection.addItem((new Card(placePopupName.value, placePopupLink.value, '#place')).createCard());
-//   closePopup(placePopup);
-// });
-
-//placePopup.addEventListener('click', closePopupByClickOverlay);
-
-// placeViewPopupCloseButton.addEventListener('click', () => {
-//   closePopup(placeViewPopup);
-// });
-
-//placeViewPopup.addEventListener('click', closePopupByClickOverlay);

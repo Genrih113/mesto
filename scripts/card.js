@@ -1,5 +1,3 @@
-import {placeViewPopup/*, openPopup*/} from './index.js';
-
 export class Card {
   constructor(placeName, placeLink, templateSelector, handleCardClick) {
     this._placeName = placeName;

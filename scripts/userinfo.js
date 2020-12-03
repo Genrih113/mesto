@@ -1,7 +1,6 @@
 export class UserInfo {
   constructor({nameSelector, passionSelector}) {
     this.name = document.querySelector(nameSelector);
-    console.log(nameSelector);
     this.passion = document.querySelector(passionSelector);
     this.profileInfoObj = {};
   }
@@ -14,7 +13,6 @@ export class UserInfo {
   }
 
   setUserInfo({name, passion}) {
-    console.log(passion);
     this.name.textContent = name;
     this.passion.textContent = passion;
   }
