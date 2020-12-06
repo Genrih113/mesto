@@ -1,9 +1,9 @@
-import {Card} from './card.js';
-import {FormValidator} from './validate.js';
-import {Section} from './section.js';
-import { PopupWithForm } from './popupwithform.js';
-import { PopupWithImage } from './popupwithimage.js';
-import {UserInfo} from './userinfo.js';
+import {Card} from './components/card.js';
+import {FormValidator} from './components/validate.js';
+import {Section} from './components/section.js';
+import {PopupWithForm} from './components/popupwithform.js';
+import {PopupWithImage} from './components/popupwithimage.js';
+import {UserInfo} from './components/userinfo.js';
 
 //переменные кнопок, отображаемых на странице
 const personEditButton = document.querySelector('.person__edit-button');
