@@ -6,6 +6,9 @@ import {PopupWithForm} from './components/popupwithform.js';
 import {PopupWithImage} from './components/popupwithimage.js';
 import {UserInfo} from './components/userinfo.js';
 
+//переменные горячих клавиш
+export const popupCloseKey = 'Escape';
+
 //переменные кнопок, отображаемых на странице
 const personEditButton = document.querySelector('.person__edit-button');
 const placeAddButton = document.querySelector('.add-button');
