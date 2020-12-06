@@ -6,7 +6,7 @@
     <meta name="description" content="Интересные места">
     <meta name="author" content="Геннадий Толстов">
     <meta name="keywords" content="Интересные места, города, природа">
-    <link rel="stylesheet" href="./pages/index.css">
+
     <title>Место</title>
   </head>
   <body class="body">
@@ -20,7 +20,7 @@
 
         <section class="profile">
           <div class="person">
-            <img class="person__avatar" src="images/person__avatar.jpg" alt="Аватар">
+            <img class="person__avatar" src="<%=require('./images/person__avatar.jpg')%>" alt="Аватар">
             <div class="person__edit">
               <div class="person__description">
                 <h1 class="person__name">Жак-Ив Кусто</h1>
@@ -98,8 +98,6 @@
         <button class="place__delete-button" type="button"></button>
       </li>
     </template>
-
-    <script type="module" src="./index.js"></script>
 
   </body>
 </html>
