@@ -5,32 +5,26 @@ import { PopupWithForm } from './popupwithform.js';
 import { PopupWithImage } from './popupwithimage.js';
 import {UserInfo} from './userinfo.js';
 
-//переменные отображаемые на странице
+//переменные кнопок, отображаемых на странице
 const personEditButton = document.querySelector('.person__edit-button');
-const personName = document.querySelector('.person__name');
-const personPassion = document.querySelector('.person__passion');
 const placeAddButton = document.querySelector('.add-button');
 
 //переменные попапа редактирования профиля
-const profilePopup = document.querySelector('.popup_profile');
-const profilePopupCloseButton = document.querySelector('.popup__close_profile');
 const profilePopupName = document.querySelector('.popup__name_profile');
 const profilePopupPassion = document.querySelector('.popup__passion_profile');
 const profilePopupForm = document.querySelector('.popup__container_profile');
 
-//переменные-ссылки для создания и размещения разметки карточки
-const places = document.querySelector('.places');
-
 //переменные попапа добавления карточки
-const placePopup = document.querySelector('.popup_place');
-const placePopupCloseButton = document.querySelector('.popup__close_place');
-const placePopupName = document.querySelector('.popup__name_place');
-const placePopupLink = document.querySelector('.popup__link_place');
 const placePopupForm = document.querySelector('.popup__container_place');
 
-//переменные попапа для просмотра фото
-const placeViewPopup = document.querySelector('.popup_place-view');
-const placeViewPopupCloseButton = document.querySelector('.popup__close_place-view');
+//переменные с селекторами элементов страницы
+const placeTemplateSelector = '#place';
+const placesContainerSelector = '.places';
+const personNameSelector = '.person__name';
+const personPassionSelector = '.person__passion';
+const profilePopupSelector = '.popup_profile';
+const placePopupSelector = '.popup_place';
+const placeViewPopupSelector = '.popup_place-view';
 
 const keysForFormValidate = {
   formSelector: '.popup__container',
@@ -71,43 +65,40 @@ const initialCards = [
   }
 ];
 
-
-
-
-
-
-
-
+//колбэк класса Section
 function renderer({name, link}, containerSelector) {
-  const cardElement = new Card(name, link, '#place', handleCardClick);
+  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick);
   const cardsBlock = document.querySelector(containerSelector);
   cardsBlock.prepend(cardElement.createCard());
 }
 
-const cardsSection = new Section({items: initialCards, renderer}, '.places');
+const cardsSection = new Section({items: initialCards, renderer}, placesContainerSelector);
 cardsSection.renderItems();
 
-const userInfo = new UserInfo({nameSelector: '.person__name', passionSelector: '.person__passion'});
+const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
 
+//колбэк класса PopupWithForm для попапа профиля
 function submiterForProfile(inputsInfoObject) {
   userInfo.setUserInfo({name: inputsInfoObject.popupInputName, passion: inputsInfoObject.popupInputPassion});
 }
 
-const profilePopupClass = new PopupWithForm('.popup_profile', submiterForProfile);
+const profilePopupClass = new PopupWithForm(profilePopupSelector, submiterForProfile);
 profilePopupClass.setEventListeners();
 
+//колбэк класса PopupWithForm для попапа добавления новой карточки
 function submiterForPlace(inputsInfoObject) {
   cardsSection.addItem((new Card(
-    inputsInfoObject.popupInputPlace, inputsInfoObject.popupInputLink, '#place', handleCardClick))
+    inputsInfoObject.popupInputPlace, inputsInfoObject.popupInputLink, placeTemplateSelector, handleCardClick))
     .createCard());
 }
 
-const placePopupClass = new PopupWithForm('.popup_place', submiterForPlace);
+const placePopupClass = new PopupWithForm(placePopupSelector, submiterForPlace);
 placePopupClass.setEventListeners();
 
-const placeViewPopupClass = new PopupWithImage('.popup_place-view');
+const placeViewPopupClass = new PopupWithImage(placeViewPopupSelector);
 placeViewPopupClass.setEventListeners();
 
+//колбэк класса Card для открытия картинки в попапе
 function handleCardClick() {
   placeViewPopupClass.open(this._placeName, this._placeLink);
 }

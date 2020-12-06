@@ -1,19 +1,19 @@
 export class UserInfo {
   constructor({nameSelector, passionSelector}) {
-    this.name = document.querySelector(nameSelector);
-    this.passion = document.querySelector(passionSelector);
-    this.profileInfoObj = {};
+    this._name = document.querySelector(nameSelector);
+    this._passion = document.querySelector(passionSelector);
+    this._profileInfoObj = {};
   }
 
   getUserInfo() {
-    return this.profileInfoObj = {
-      name: this.name.textContent,
-      passion: this.passion.textContent
+    return this._profileInfoObj = {
+      name: this._name.textContent,
+      passion: this._passion.textContent
     }
   }
 
   setUserInfo({name, passion}) {
-    this.name.textContent = name;
-    this.passion.textContent = passion;
+    this._name.textContent = name;
+    this._passion.textContent = passion;
   }
 }

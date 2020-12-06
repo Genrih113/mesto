@@ -3,7 +3,7 @@ export class Card {
     this._placeName = placeName;
     this._placeLink = placeLink;
     this._templateSelector = templateSelector;
-    this.handleCardClick = handleCardClick;
+    this._handleImgClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -21,13 +21,6 @@ export class Card {
 
   _handleLikeClick() {
     this._place.querySelector('.place__like-button').classList.toggle('place__like-button_liked');
-  }
-
-  _handleImgClick() {
-    // placeViewPopup.querySelector('.popup__place-image').src = this._placeLink;
-    // placeViewPopup.querySelector('.popup__place-caption').textContent = this._placeName;
-    // openPopup(placeViewPopup);
-    this.handleCardClick();
   }
 
   _setDeleteListener() {
