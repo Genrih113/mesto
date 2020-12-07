@@ -1,4 +1,4 @@
-import {popupCloseKey} from '../index.js';
+import {popupCloseKey} from '../utils/constants.js';
 export class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
