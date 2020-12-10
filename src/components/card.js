@@ -1,9 +1,10 @@
 export class Card {
-  constructor(placeName, placeLink, templateSelector, handleCardClick) {
+  constructor(placeName, placeLink, templateSelector, handleCardClick, numberOfLikes) {
     this._placeName = placeName;
     this._placeLink = placeLink;
     this._templateSelector = templateSelector;
     this._handleImgClick = handleCardClick;
+    this._numberOfLikes = numberOfLikes;
   }
 
   _getTemplate() {
@@ -47,6 +48,7 @@ export class Card {
     this._placeImageElement = this._place.querySelector('.place__img')
     this._placeImageElement.alt = this._placeName;
     this._placeImageElement.src = this._placeLink;
+    this._place.querySelector('.place__like-counter').textContent = this._numberOfLikes;
 
     this._setDeleteListener();
     this._setLikeListener();

@@ -4,6 +4,7 @@ export const popupCloseKey = 'Escape';
 //переменные кнопок, отображаемых на странице
 export const personEditButton = document.querySelector('.person__edit-button');
 export const placeAddButton = document.querySelector('.add-button');
+export const avatarButton = document.querySelector('.person__avatar-button');
 
 //переменные попапа редактирования профиля
 export const profilePopupName = document.querySelector('.popup__name_profile');
@@ -21,6 +22,7 @@ export const personPassionSelector = '.person__passion';
 export const profilePopupSelector = '.popup_profile';
 export const placePopupSelector = '.popup_place';
 export const placeViewPopupSelector = '.popup_place-view';
+export const avatarPopupSelector = '.popup_avatar';
 
 export const keysForFormValidate = {
   formSelector: '.popup__container',
@@ -57,3 +59,7 @@ export const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+export const personAvatar = document.querySelector('.person__avatar');
+export const personName = document.querySelector('.person__name');
+export const personPassion = document.querySelector('.person__passion');
