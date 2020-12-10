@@ -1,0 +1,22 @@
+.person__avatar-button {
+  /*display: none;*/
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, .5);
+  transition: opacity .4s linear;
+}
+
+
+.person__avatar-button:hover {
+  /*display: block;*/
+  opacity: 1;
+  background-image: url('../../../images/edit-button1.svg');
+  background-size: 20%;
+  background-position: center;
+  background-repeat: no-repeat;
+}

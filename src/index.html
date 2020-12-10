@@ -20,7 +20,10 @@
 
         <section class="profile">
           <div class="person">
-            <img class="person__avatar" src="<%=require('./images/person__avatar.jpg')%>" alt="Аватар">
+            <div class="person__avatar-container">
+              <img class="person__avatar" src="<%=require('./images/person__avatar.jpg')%>" alt="Аватар">
+              <div class="person__avatar-button"></div>
+            </div>
             <div class="person__edit">
               <div class="person__description">
                 <h1 class="person__name">Жак-Ив Кусто</h1>
@@ -84,6 +87,27 @@
         </figure>
       </div>
 
+      <div class="popup popup_confirm">
+        <form class="popup__container popup__container_confirm" name="confirmPopupForm" novalidate>
+          <h2 class="popup__title">Вы уверены?</h2>
+          <button class="popup__submit" type="submit">Да</button>
+          <button class="popup__close popup__close_confirm" type="button" aria-label="Закрыть"></button>
+        </form>
+      </div>
+
+      <div class="popup popup_avatar">
+        <form class="popup__container popup__container_avatar" name="avatarPopupForm" novalidate>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <fieldset class="popup__content">
+            <input id="avatarLink" class="popup__input popup__link_avatar" name="popupInputAvatarLink"
+              type="url" required placeholder="Ссылка на аватар">
+            <span id="avatarLink-error" class="error"></span>
+            <button class="popup__submit" type="submit">Сохранить</button>
+          </fieldset>
+          <button class="popup__close popup__close_profile" type="button" aria-label="Закрыть"></button>
+        </form>
+      </div>
+
     </div>
 
     <template id="place">
@@ -93,7 +117,10 @@
         </div>
         <div class="place__description">
           <h2 class="place__title"></h2>
-          <button class="place__like-button" type="button"></button>
+          <div class="place__like-container">
+            <button class="place__like-button" type="button"></button>
+            <p class="place__like-counter">45</p>
+          </div>
         </div>
         <button class="place__delete-button" type="button"></button>
       </li>
