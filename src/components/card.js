@@ -1,10 +1,13 @@
 export class Card {
-  constructor(placeName, placeLink, templateSelector, handleCardClick, numberOfLikes) {
+  constructor(placeName, placeLink, templateSelector, handleCardClick, handleDeleteClick, imageId, numberOfLikes, isItMyCard) {
     this._placeName = placeName;
     this._placeLink = placeLink;
     this._templateSelector = templateSelector;
     this._handleImgClick = handleCardClick;
     this._numberOfLikes = numberOfLikes;
+    this._isItMyCard = isItMyCard;
+    this._handleDeleteClick = handleDeleteClick;
+    this._imageId = imageId;
   }
 
   _getTemplate() {
@@ -16,8 +19,13 @@ export class Card {
     return cardElement;
   }
 
-  _handleDeleteClick() {
-    this._place.remove();
+  // _handleDeleteClick() {
+  //   this._place.remove();
+
+  // }
+
+  getImageId() {
+    return this._imageId;
   }
 
   _handleLikeClick() {
@@ -44,6 +52,9 @@ export class Card {
 
   createCard() {
     this._place = this._getTemplate();
+    if (!this._isItMyCard) {
+      this._place.querySelector('.place__delete-button').classList.add('place__delete-button_invisible');
+    }
     this._place.querySelector('.place__title').textContent = this._placeName;
     this._placeImageElement = this._place.querySelector('.place__img')
     this._placeImageElement.alt = this._placeName;

@@ -34,6 +34,7 @@
 @import url('../blocks/place/__like-button/_liked/place__like-button_liked.css');
 @import url('../blocks/place/__like-counter/place__like-counter.css');
 @import url('../blocks/place/__delete-button/place__delete-button.css');
+@import url('../blocks/place/__delete-button/_invisible/place__delete-button_invisible.css');
 
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/_opened/popup_opened.css');

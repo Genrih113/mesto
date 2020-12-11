@@ -5,6 +5,7 @@ import {Section} from './components/section.js';
 import {PopupWithForm} from './components/popupwithform.js';
 import {PopupWithImage} from './components/popupwithimage.js';
 import {UserInfo} from './components/userinfo.js';
+import {PopupWithConfirm} from './components/popupwithconfirm.js';
 
 import {
   personEditButton,
@@ -27,8 +28,10 @@ import {
   avatarButton,
   personAvatar,
   personName,
-  personPassion
+  personPassion,
+  confirmPopupSelector
 } from './utils/constants.js';
+import { Popup } from './components/popup';
 
 //рендер карточек
 fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards', {
@@ -66,11 +69,19 @@ const profileValidator = new FormValidator(keysForFormValidate, profilePopupForm
 const placeValidator = new FormValidator(keysForFormValidate, placePopupForm);
 
 //колбэк класса Section
-function renderer({name, link, likes}, containerSelector) {
-  console.log(likes);
-  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, likes.length);
+function renderer({name, link, _id, likes, owner}, containerSelector) {
+  //console.log(likes);
+  let isItMyCard;
+  if (owner._id === "75afb32823f9c1dc44155bd8") {
+    isItMyCard = true;
+  } else {
+    isItMyCard = false;
+  }
+  console.log(isItMyCard);
+  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, _id, likes.length, isItMyCard);
   const cardsBlock = document.querySelector(containerSelector);
-  cardsBlock.prepend(cardElement.createCard());
+  //cardsBlock.prepend(cardElement.createCard());
+  cardsBlock.append(cardElement.createCard());
 }
 
 //const cardsSection = new Section({items: initialCards, renderer}, placesContainerSelector);
@@ -115,8 +126,11 @@ function submiterForPlace(inputsInfoObject) {
     })
     .then((res) => res.json())
     .then((result) => {
+      console.log(result);
+      let isItMyCard = true;
+      let cardsSection = new Section({items: result, renderer}, placesContainerSelector);
       cardsSection.addItem((new Card(
-        result.name, result.link, placeTemplateSelector, handleCardClick))
+        result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, result._id, result.likes.length, isItMyCard))
         .createCard());
     });
 
@@ -145,6 +159,48 @@ placeViewPopupClass.setEventListeners();
 function handleCardClick() {
   placeViewPopupClass.open(this._placeName, this._placeLink);
 }
+
+let cardId = '';
+let deletableCard;
+//колбэк открытия попапа подтверждения удаления
+function handleDeleteClick() {
+  confirmPopupClass.open();
+  cardId = this.getImageId();
+  //submiterForPopupWithConfirm(this.getImageId());
+  //this._place.remove();
+  deletableCard = this._place;
+}
+
+
+
+
+const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector, submiterForPopupWithConfirm);
+confirmPopupClass.setEventListeners();
+//колбэк удаления карточки
+function submiterForPopupWithConfirm() {
+  //let cardId = this.getImageId();
+  console.log(this);
+  console.log('https://mesto.nomoreparties.co/v1/cohort-18/cards/' + cardId);
+  fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/' + cardId, {
+    method: 'DELETE',
+    headers: {
+      authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
+      'Content-Type': 'application/json'
+    }
+    })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+      deletableCard.remove();
+    });
+}
+
+
+
+
+
+
+
 
 profileValidator.validateForm();
 placeValidator.validateForm();
