@@ -71,14 +71,17 @@ const placeValidator = new FormValidator(keysForFormValidate, placePopupForm);
 //колбэк класса Section
 function renderer({name, link, _id, likes, owner}, containerSelector) {
   //console.log(likes);
-  let isItMyCard;
+  let isItMyCard = false; let doILiked = false;
   if (owner._id === "75afb32823f9c1dc44155bd8") {
     isItMyCard = true;
   } else {
     isItMyCard = false;
-  }
+  };
+  if(likes.some((like) => {
+    return like._id === "75afb32823f9c1dc44155bd8";
+  })) {doILiked = true};
   console.log(isItMyCard);
-  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, _id, likes.length, isItMyCard);
+  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, _id, likes.length, isItMyCard, doILiked);
   const cardsBlock = document.querySelector(containerSelector);
   //cardsBlock.prepend(cardElement.createCard());
   cardsBlock.append(cardElement.createCard());
@@ -128,9 +131,10 @@ function submiterForPlace(inputsInfoObject) {
     .then((result) => {
       console.log(result);
       let isItMyCard = true;
+      let doILiked = false;
       let cardsSection = new Section({items: result, renderer}, placesContainerSelector);
       cardsSection.addItem((new Card(
-        result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, result._id, result.likes.length, isItMyCard))
+        result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, result._id, result.likes.length, isItMyCard, doILiked))
         .createCard());
     });
 
@@ -147,7 +151,21 @@ avatarButton.addEventListener('click', () => {
   avatarPopupClass.open();
 });
 function submiterForAvatar(url) {
-  document.querySelector('.person__avatar').src = url.popupInputAvatarLink;
+  fetch('https://mesto.nomoreparties.co/v1/cohort-18/users/me/avatar', {
+  method: 'PATCH',
+  headers: {
+    authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    avatar: url.popupInputAvatarLink
+  })
+  })
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result);
+    document.querySelector('.person__avatar').src = result.avatar;
+  });
 }
 
 
@@ -195,6 +213,20 @@ function submiterForPopupWithConfirm() {
     });
 }
 
+//колбэк лайка
+// function handleLikeClick() {
+//   fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/likes' + this._imageId, {
+//     method: 'PUT',
+//     headers: {
+//       authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
+//       'Content-Type': 'application/json'
+//     }
+//     })
+//     .then((res) => res.json())
+//     .then((result) => {
+//       console.log(result);
+//     });
+// }
 
 
 
