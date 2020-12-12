@@ -65,5 +65,4 @@ export const personAvatar = document.querySelector('.person__avatar');
 export const personName = document.querySelector('.person__name');
 export const personPassion = document.querySelector('.person__passion');
 
-//5fd37395e72d0100ab6b36b5  мой owner id
-//"75afb32823f9c1dc44155bd8"
+export const myOwnerId = '75afb32823f9c1dc44155bd8';
