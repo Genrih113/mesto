@@ -1,0 +1,5 @@
+.person__avatar-img-container {
+  position: relative;
+  width: 120px;
+  padding-top: 100%;
+}
