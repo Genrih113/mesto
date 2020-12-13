@@ -31,14 +31,16 @@ import {
   personAvatar,
   personName,
   personPassion,
-  confirmPopupSelector
+  confirmPopupSelector,
+
+  serverKeys
 } from './utils/constants.js';
 import { Popup } from './components/popup';
 
 const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
 
 
-const apiEx = new Api();
+const apiEx = new Api(serverKeys);
 
 
 //рендер карточек
@@ -133,7 +135,12 @@ function submiterForAvatar(url) {
     console.log(result);
     personAvatar.src = result.avatar;
     this.close();
-  });
+  })
+  .catch(err => {
+    console.log(err);
+    this.close();
+  })
+
 }
 
 
