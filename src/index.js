@@ -135,11 +135,11 @@ const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector
 // }
 }
 function submiterForProfile(inputsInfoObject) {
-  console.log('СОХРАНЕНИЕ');
-apiEx.editUserInfo(inputsInfoObject)
-.then((result) => {
-  userInfo.setUserInfo({name: result.name, passion: result.about});
-});
+  apiEx.editUserInfo(inputsInfoObject)
+  .then((result) => {
+    userInfo.setUserInfo({name: result.name, passion: result.about});
+    this.close();
+  });
 }
 
 
@@ -184,6 +184,7 @@ function submiterForPlace(inputsInfoObject) {
       cardsSection.addItem((new Card(
         result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, result._id, result.likes.length, isItMyCard, doILiked))
         .createCard());
+      this.close();
     });
 
 }
@@ -223,6 +224,7 @@ function submiterForAvatar(url) {
   .then((result) => {
     console.log(result);
     document.querySelector('.person__avatar').src = result.avatar;
+    this.close();
   });
 }
 
