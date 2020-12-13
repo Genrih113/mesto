@@ -27,12 +27,16 @@ import {
 
   avatarPopupSelector,
   avatarButton,
+  avatarPopupForm,
   personAvatar,
   personName,
   personPassion,
   confirmPopupSelector
 } from './utils/constants.js';
 import { Popup } from './components/popup';
+
+const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
+
 
 const apiEx = new Api();
 console.log(apiEx);
@@ -77,20 +81,20 @@ apiEx.getUserInfo()
       .then((result) => {
         console.log(result);
         personAvatar.src = result.avatar;
-        personName.textContent = result.name;
-        personPassion.textContent = result.about;
+        userInfo.setUserInfo({name: result.name, passion: result.about});
+        //personName.textContent = result.name;
+        //personPassion.textContent = result.about;
       });
 
 
 
 
 
-const profileValidator = new FormValidator(keysForFormValidate, profilePopupForm);
-const placeValidator = new FormValidator(keysForFormValidate, placePopupForm);
 
 //колбэк класса Section
 function renderer({name, link, _id, likes, owner}, containerSelector) {
-  let isItMyCard = false; let doILiked = false;
+  let isItMyCard;
+  let doILiked;
   if (owner._id === "75afb32823f9c1dc44155bd8") {
     isItMyCard = true;
   } else {
@@ -98,7 +102,11 @@ function renderer({name, link, _id, likes, owner}, containerSelector) {
   };
   if(likes.some((like) => {
     return like._id === "75afb32823f9c1dc44155bd8";
-  })) {doILiked = true};
+  })) {
+    doILiked = true;
+  } else {
+    doILiked = false;
+  };
   console.log(isItMyCard);
   const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, _id, likes.length, isItMyCard, doILiked);
   const cardsBlock = document.querySelector(containerSelector);
@@ -111,7 +119,6 @@ function renderer({name, link, _id, likes, owner}, containerSelector) {
 //cardsSection.renderItems();
 }
 
-const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
 
 //колбэк класса PopupWithForm для попапа профиля
 {//закоммичено
@@ -197,6 +204,7 @@ placePopupClass.setEventListeners();
 const avatarPopupClass = new PopupWithForm(avatarPopupSelector, submiterForAvatar);
 avatarPopupClass.setEventListeners();
 avatarButton.addEventListener('click', () => {
+  avatarValidator.clearPopupFromErrors();
   avatarPopupClass.open();
 });
 //колбэк отправки аватара
@@ -223,7 +231,7 @@ function submiterForAvatar(url) {
   apiEx.changeAvatar(url)
   .then((result) => {
     console.log(result);
-    document.querySelector('.person__avatar').src = result.avatar;
+    personAvatar.src = result.avatar;
     this.close();
   });
 }
@@ -241,9 +249,9 @@ function handleCardClick() {
 
 
 
-let cardId = ''; //берется из класса Card
-let deletableCard; //берется из класса Card
-//колбэк открытия попапа подтверждения удаления
+let cardId; //значение берется из класса Card
+let deletableCard; //значение берется из класса Card
+//колбэк класса Card для открытия попапа подтверждения удаления
 function handleDeleteClick() {
   confirmPopupClass.open();
   cardId = this.getImageId();
@@ -252,7 +260,7 @@ function handleDeleteClick() {
 
 const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector, submiterForPopupWithConfirm);
 confirmPopupClass.setEventListeners();
-//колбэк удаления карточки
+//колбэк класса PopupWithConfirm для удаления карточки
 {//comments
 // function submiterForPopupWithConfirm() {
 //   fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/' + cardId, {
@@ -274,6 +282,8 @@ function submiterForPopupWithConfirm() {
     .then((result) => {
       console.log(result);
       deletableCard.remove();
+      cardId = null;
+      deletableCard = null;
     });
 }
 
@@ -293,7 +303,7 @@ function submiterForPopupWithConfirm() {
 //     });
 // }
 }
-
+//колбэк класса Card для лайков
 function handleLikeClick() {
    if (!this._doILikedCard) {
      apiEx.likeToggleCard(this._doILikedCard, this._imageId)
@@ -313,10 +323,12 @@ function handleLikeClick() {
 }
 
 
-
-
+const profileValidator = new FormValidator(keysForFormValidate, profilePopupForm);
+const placeValidator = new FormValidator(keysForFormValidate, placePopupForm);
+const avatarValidator = new FormValidator(keysForFormValidate, avatarPopupForm);
 profileValidator.validateForm();
 placeValidator.validateForm();
+avatarValidator.validateForm();
 
 personEditButton.addEventListener('click', () => {
   profileValidator.clearPopupFromErrors();

@@ -11,6 +11,9 @@ export const profilePopupName = document.querySelector('.popup__name_profile');
 export const profilePopupPassion = document.querySelector('.popup__passion_profile');
 export const profilePopupForm = document.querySelector('.popup__container_profile');
 
+//переменные попапа редактирования аватара
+export const avatarPopupForm = document.querySelector('.popup__container_avatar');
+
 //переменные попапа добавления карточки
 export const placePopupForm = document.querySelector('.popup__container_place');
 
