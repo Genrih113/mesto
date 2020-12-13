@@ -39,22 +39,9 @@ const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector
 
 
 const apiEx = new Api();
-console.log(apiEx);
+
 
 //рендер карточек
-{//закоммичено
-// fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards', {
-//   headers: {
-//     authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304'
-//   }
-//   })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//     const serverCards = new Section({items: result, renderer}, placesContainerSelector);
-//     serverCards.renderItems();
-//   });
-}
 apiEx.getInitialCards()
 .then((result) => {
   console.log(result);
@@ -62,32 +49,14 @@ apiEx.getInitialCards()
   serverCards.renderItems();
 });
 
+
 //получение инфо пользователя
-{//закоммичено
-// fetch('https://mesto.nomoreparties.co/v1/cohort-18/users/me', {
-//   headers: {
-//     authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304'
-//   }
-//   })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//     personAvatar.src = result.avatar;
-//     personName.textContent = result.name;
-//     personPassion.textContent = result.about;
-//   });
-}
 apiEx.getUserInfo()
-      .then((result) => {
-        console.log(result);
-        personAvatar.src = result.avatar;
-        userInfo.setUserInfo({name: result.name, passion: result.about});
-        //personName.textContent = result.name;
-        //personPassion.textContent = result.about;
-      });
-
-
-
+  .then((result) => {
+    console.log(result);
+    personAvatar.src = result.avatar;
+    userInfo.setUserInfo({name: result.name, passion: result.about});
+});
 
 
 
@@ -114,33 +83,7 @@ function renderer({name, link, _id, likes, owner}, containerSelector) {
 }
 
 
-{//закоммичено
-  //const cardsSection = new Section({items: initialCards, renderer}, placesContainerSelector);
-//cardsSection.renderItems();
-}
-
-
 //колбэк класса PopupWithForm для попапа профиля
-{//закоммичено
-// function submiterForProfile(inputsInfoObject) {
-//   console.log('СОХРАНЕНИЕ');
-//   fetch('https://mesto.nomoreparties.co/v1/cohort-18/users/me', {
-//   method: 'PATCH',
-//   headers: {
-//     authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({
-//     name: inputsInfoObject.popupInputName,
-//     about: inputsInfoObject.popupInputPassion
-//   })
-//   })
-//   .then((res) => res.json())
-//   .then((result) => {
-//   userInfo.setUserInfo({name: result.name, passion: result.about});
-//   });
-// }
-}
 function submiterForProfile(inputsInfoObject) {
   apiEx.editUserInfo(inputsInfoObject)
   .then((result) => {
@@ -150,37 +93,10 @@ function submiterForProfile(inputsInfoObject) {
 }
 
 
-
 const profilePopupClass = new PopupWithForm(profilePopupSelector, submiterForProfile);
 profilePopupClass.setEventListeners();
 
 //колбэк класса PopupWithForm для попапа добавления новой карточки
-{//comments
-// function submiterForPlace(inputsInfoObject) {
-//   fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards', {
-//     method: 'POST',
-//     headers: {
-//       authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({
-//       name: inputsInfoObject.popupInputPlace,
-//       link: inputsInfoObject.popupInputLink
-//     })
-//     })
-//     .then((res) => res.json())
-//     .then((result) => {
-//       console.log(result);
-//       let isItMyCard = true;
-//       let doILiked = false;
-//       let cardsSection = new Section({items: result, renderer}, placesContainerSelector);
-//       cardsSection.addItem((new Card(
-//         result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, result._id, result.likes.length, isItMyCard, doILiked))
-//         .createCard());
-//     });
-
-// }
-}
 function submiterForPlace(inputsInfoObject) {
   apiEx.addNewCard(inputsInfoObject)
     .then((result) => {
@@ -196,6 +112,7 @@ function submiterForPlace(inputsInfoObject) {
 
 }
 
+
 const placePopupClass = new PopupWithForm(placePopupSelector, submiterForPlace);
 placePopupClass.setEventListeners();
 
@@ -203,30 +120,13 @@ placePopupClass.setEventListeners();
 //Avatar IMG story
 const avatarPopupClass = new PopupWithForm(avatarPopupSelector, submiterForAvatar);
 avatarPopupClass.setEventListeners();
+
 avatarButton.addEventListener('click', () => {
   avatarValidator.clearPopupFromErrors();
   avatarPopupClass.open();
 });
+
 //колбэк отправки аватара
-{//comments
-// function submiterForAvatar(url) {
-//   fetch('https://mesto.nomoreparties.co/v1/cohort-18/users/me/avatar', {
-//   method: 'PATCH',
-//   headers: {
-//     authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({
-//     avatar: url.popupInputAvatarLink
-//   })
-//   })
-//   .then((res) => res.json())
-//   .then((result) => {
-//     console.log(result);
-//     document.querySelector('.person__avatar').src = result.avatar;
-//   });
-// }
-}
 function submiterForAvatar(url) {
   apiEx.changeAvatar(url)
   .then((result) => {
@@ -235,7 +135,6 @@ function submiterForAvatar(url) {
     this.close();
   });
 }
-
 
 
 const placeViewPopupClass = new PopupWithImage(placeViewPopupSelector);
@@ -248,9 +147,9 @@ function handleCardClick() {
 
 
 
-
 let cardId; //значение берется из класса Card
 let deletableCard; //значение берется из класса Card
+
 //колбэк класса Card для открытия попапа подтверждения удаления
 function handleDeleteClick() {
   confirmPopupClass.open();
@@ -260,23 +159,8 @@ function handleDeleteClick() {
 
 const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector, submiterForPopupWithConfirm);
 confirmPopupClass.setEventListeners();
+
 //колбэк класса PopupWithConfirm для удаления карточки
-{//comments
-// function submiterForPopupWithConfirm() {
-//   fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/' + cardId, {
-//     method: 'DELETE',
-//     headers: {
-//       authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
-//       'Content-Type': 'application/json'
-//     }
-//     })
-//     .then((res) => res.json())
-//     .then((result) => {
-//       console.log(result);
-//       deletableCard.remove();
-//     });
-// }
-}
 function submiterForPopupWithConfirm() {
   apiEx.deleteCard(cardId)
     .then((result) => {
@@ -287,22 +171,7 @@ function submiterForPopupWithConfirm() {
     });
 }
 
-{//закоммичено
-//колбэк лайка
-// function handleLikeClick() {
-//   fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/likes' + this._imageId, {
-//     method: 'PUT',
-//     headers: {
-//       authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
-//       'Content-Type': 'application/json'
-//     }
-//     })
-//     .then((res) => res.json())
-//     .then((result) => {
-//       console.log(result);
-//     });
-// }
-}
+
 //колбэк класса Card для лайков
 function handleLikeClick() {
    if (!this._doILikedCard) {
@@ -311,13 +180,11 @@ function handleLikeClick() {
        console.log(result);
        this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
        this._place.querySelector('.place__like-counter').textContent = result.likes.length;
-  //     this._doILikedCard = !this._doILikedCard;//если снять коменты тут то ф-я превращается в класс
      });} else {
        apiEx.likeToggleCard(this._doILikedCard, this._imageId)
        .then((result) => {
        this._place.querySelector('.place__like-button').classList.remove('place__like-button_liked');
        this._place.querySelector('.place__like-counter').textContent = result.likes.length;
-  //     this._doILikedCard = !this._doILikedCard;
      })
      }
 }
@@ -330,6 +197,7 @@ profileValidator.validateForm();
 placeValidator.validateForm();
 avatarValidator.validateForm();
 
+
 personEditButton.addEventListener('click', () => {
   profileValidator.clearPopupFromErrors();
   const userData = userInfo.getUserInfo();
@@ -337,6 +205,7 @@ personEditButton.addEventListener('click', () => {
   profilePopupPassion.value = userData.passion;
   profilePopupClass.open();
 });
+
 
 placeAddButton.addEventListener('click', () => {
   placeValidator.clearPopupFromErrors();
