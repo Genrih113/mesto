@@ -100,7 +100,7 @@ function renderer({name, link, _id, likes, owner}, containerSelector) {
     return like._id === "75afb32823f9c1dc44155bd8";
   })) {doILiked = true};
   console.log(isItMyCard);
-  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, _id, likes.length, isItMyCard, doILiked);
+  const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, _id, likes.length, isItMyCard, doILiked);
   const cardsBlock = document.querySelector(containerSelector);
   cardsBlock.append(cardElement.createCard());
 }
@@ -182,7 +182,7 @@ function submiterForPlace(inputsInfoObject) {
       let doILiked = false;
       let cardsSection = new Section({items: result, renderer}, placesContainerSelector);
       cardsSection.addItem((new Card(
-        result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, result._id, result.likes.length, isItMyCard, doILiked))
+        result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, result._id, result.likes.length, isItMyCard, doILiked))
         .createCard());
     });
 
@@ -292,7 +292,23 @@ function submiterForPopupWithConfirm() {
 // }
 }
 
-
+function handleLikeClick() {
+   if (!this._doILikedCard) {
+     apiEx.likeToggleCard(this._doILikedCard, this._imageId)
+     .then((result) => {
+       console.log(result);
+       this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
+       this._place.querySelector('.place__like-counter').textContent = result.likes.length;
+  //     this._doILikedCard = !this._doILikedCard;//если снять коменты тут то ф-я превращается в класс
+     });} else {
+       apiEx.likeToggleCard(this._doILikedCard, this._imageId)
+       .then((result) => {
+       this._place.querySelector('.place__like-button').classList.remove('place__like-button_liked');
+       this._place.querySelector('.place__like-counter').textContent = result.likes.length;
+  //     this._doILikedCard = !this._doILikedCard;
+     })
+     }
+}
 
 
 

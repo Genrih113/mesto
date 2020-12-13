@@ -62,8 +62,26 @@ export class Api {
         .then((res) => res.json())
   }
 
-  likeToggleCard() {
-
+  likeToggleCard(doILikedCard, imageId) {
+    if (!doILikedCard) {
+      return fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/likes/' + imageId, {
+      method: 'PUT',
+      headers: {
+        authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
+        'Content-Type': 'application/json'
+      }
+      })
+      .then((res) => res.json())
+      } else {
+      return fetch('https://mesto.nomoreparties.co/v1/cohort-18/cards/likes/' + imageId, {
+      method: 'DELETE',
+      headers: {
+        authorization: '7d3b332b-dc1e-49e3-90aa-8e33833ea304',
+        'Content-Type': 'application/json'
+      }
+      })
+      .then((res) => res.json())
+      }
   }
 
   changeAvatar(url) {
