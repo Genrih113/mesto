@@ -23,95 +23,41 @@ import {
   placePopupSelector,
   placeViewPopupSelector,
   keysForFormValidate,
-  initialCards,
 
   avatarPopupSelector,
   avatarButton,
   avatarPopupForm,
   personAvatar,
-  personName,
-  personPassion,
   confirmPopupSelector,
 
   serverKeys
 } from './utils/constants.js';
-import { Popup } from './components/popup';
 
-const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
-
-
-const apiEx = new Api(serverKeys);
-//let userId;
-
-
-// //получение инфо пользователя
-// apiEx.getUserInfo()
-// .then((result) => {
-//   console.log(result);
-//   userId = result._id;
-//   personAvatar.src = result.avatar;
-//   userInfo.setUserInfo({name: result.name, passion: result.about});
-// })
-// .catch(err => {
-//   console.log(err);
-// })
-
-
-// //рендер карточек
-// apiEx.getInitialCards()
-// .then((result) => {
-//   console.log(result);
-//   const serverCards = new Section({items: result, renderer}, placesContainerSelector);
-//   serverCards.renderItems();
-// })
-// .catch(err => {
-//   console.log(err);
-// })
-
-//запрос данных пользователя и карточек с сервера и рендер карточек
-Promise.all([apiEx.getUserInfo(), apiEx.getInitialCards()])
-.then(dataFromPromises => {
-  const [userDataObj, initialCardsObj] = dataFromPromises;
-  const userId = userDataObj._id;
-  personAvatar.src = userDataObj.avatar;
-  userInfo.setUserInfo({name: userDataObj.name, passion: userDataObj.about});
-  const serverCards = new Section({items: initialCardsObj, renderer}, placesContainerSelector);
-  serverCards.renderItems();
-})
-// .catch(dataFromPromises => {
-//   //const [userDataObj, initialCardsObj] = dataFromPromises;
-//   console.log(dataFromPromises);
-// })
-.catch(err => {
-  console.log(err);
-})
 
 //колбэк класса Section
 function renderer({name, link, _id, likes, owner}, containerSelector) {
   let isItMyCard;
   let doILiked;
-  if (owner._id === "75afb32823f9c1dc44155bd8") {
+  if (owner._id === userId) {
     isItMyCard = true;
   } else {
     isItMyCard = false;
   };
   if(likes.some((like) => {
-    return like._id === "75afb32823f9c1dc44155bd8";
+    return like._id === userId;
   })) {
     doILiked = true;
   } else {
     doILiked = false;
   };
-  console.log(isItMyCard);
   const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, _id, likes.length, isItMyCard, doILiked);
   const cardsBlock = document.querySelector(containerSelector);
   cardsBlock.append(cardElement.createCard());
 }
 
-
 //колбэк класса PopupWithForm для попапа профиля
 function submiterForProfile(inputsInfoObject) {
-  apiEx.editUserInfo(inputsInfoObject)
+  api.editUserInfo(inputsInfoObject)
   .then((result) => {
     userInfo.setUserInfo({name: result.name, passion: result.about});
     this.close();
@@ -122,15 +68,10 @@ function submiterForProfile(inputsInfoObject) {
   });
 }
 
-
-const profilePopupClass = new PopupWithForm(profilePopupSelector, submiterForProfile);
-profilePopupClass.setEventListeners();
-
 //колбэк класса PopupWithForm для попапа добавления новой карточки
 function submiterForPlace(inputsInfoObject) {
-  apiEx.addNewCard(inputsInfoObject)
+  api.addNewCard(inputsInfoObject)
     .then((result) => {
-      console.log(result);
       let isItMyCard = true;
       let doILiked = false;
       let cardsSection = new Section({items: result, renderer}, placesContainerSelector);
@@ -145,25 +86,10 @@ function submiterForPlace(inputsInfoObject) {
     })
 }
 
-
-const placePopupClass = new PopupWithForm(placePopupSelector, submiterForPlace);
-placePopupClass.setEventListeners();
-
-
-//Avatar IMG story
-const avatarPopupClass = new PopupWithForm(avatarPopupSelector, submiterForAvatar);
-avatarPopupClass.setEventListeners();
-
-avatarButton.addEventListener('click', () => {
-  avatarValidator.clearPopupFromErrors();
-  avatarPopupClass.open();
-});
-
 //колбэк отправки аватара
 function submiterForAvatar(url) {
-  apiEx.changeAvatar(url)
+  api.changeAvatar(url)
   .then((result) => {
-    console.log(result);
     personAvatar.src = result.avatar;
     this.close();
   })
@@ -173,54 +99,16 @@ function submiterForAvatar(url) {
   })
 }
 
-
-const placeViewPopupClass = new PopupWithImage(placeViewPopupSelector);
-placeViewPopupClass.setEventListeners();
-
 //колбэк класса Card для открытия картинки в попапе
 function handleCardClick() {
   placeViewPopupClass.open(this._placeName, this._placeLink);
 }
 
-
-
-let cardId; //присвоение в обработчике удаления класса Card
-let deletableCard; //присвоение в обработчике удаления класса Card
-
-
-
-//колбэк класса Card для открытия попапа подтверждения удаления
-function handleDeleteClick() {
-  confirmPopupClass.setSubmiter(() => submiterForPopupWithConfirm(this._imageId, this._place));
-  confirmPopupClass.open();
- // cardId = this.getImageId();
- // deletableCard = this._place;
-}
-
-const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector);//, submiterForPopupWithConfirm);
-confirmPopupClass.setEventListeners();
-
-//колбэк класса PopupWithConfirm для удаления карточки
-function submiterForPopupWithConfirm(imageId, placeCard) {
-  apiEx.deleteCard(imageId)
-  .then((result) => {
-    console.log(result);
-    placeCard.remove();
-  })
-  .catch(err => {
-    console.log(err);
-  })
-}
-
-
-
-
 //колбэк класса Card для лайков
 function handleLikeClick() {
   if (!this._doILikedCard) {
-    apiEx.likeToggleCard(this._doILikedCard, this._imageId)
+    api.likeToggleCard(this._doILikedCard, this._imageId)
     .then((result) => {
-      console.log(result);
       this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
       this._place.querySelector('.place__like-counter').textContent = result.likes.length;
     })
@@ -228,7 +116,7 @@ function handleLikeClick() {
       console.log(err);
     })
   } else {
-    apiEx.likeToggleCard(this._doILikedCard, this._imageId)
+    api.likeToggleCard(this._doILikedCard, this._imageId)
     .then((result) => {
       this._place.querySelector('.place__like-button').classList.remove('place__like-button_liked');
       this._place.querySelector('.place__like-counter').textContent = result.likes.length;
@@ -238,6 +126,64 @@ function handleLikeClick() {
     })
   }
 }
+
+//колбэк класса Card для открытия попапа подтверждения удаления
+function handleDeleteClick() {
+  confirmPopupClass.setSubmiter(() => submiterForPopupWithConfirm(this._imageId, this._place));
+  confirmPopupClass.open();
+}
+
+//колбэк класса PopupWithConfirm для удаления карточки
+function submiterForPopupWithConfirm(imageId, placeCard) {
+  api.deleteCard(imageId)
+  .then((result) => {
+    placeCard.remove();
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
+
+
+const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
+
+const api = new Api(serverKeys);
+
+let userId;
+
+//запрос данных пользователя и карточек с сервера и рендер карточек
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then(dataFromPromises => {
+  const [userDataObj, initialCardsObj] = dataFromPromises;
+  userId = userDataObj._id;
+  personAvatar.src = userDataObj.avatar;
+  userInfo.setUserInfo({name: userDataObj.name, passion: userDataObj.about});
+  const serverCards = new Section({items: initialCardsObj, renderer}, placesContainerSelector);
+  serverCards.renderItems();
+})
+.catch(err => {
+  console.log(err);
+})
+
+
+const profilePopupClass = new PopupWithForm(profilePopupSelector, submiterForProfile);
+profilePopupClass.setEventListeners();
+
+
+const placePopupClass = new PopupWithForm(placePopupSelector, submiterForPlace);
+placePopupClass.setEventListeners();
+
+
+const avatarPopupClass = new PopupWithForm(avatarPopupSelector, submiterForAvatar);
+avatarPopupClass.setEventListeners();
+
+
+const placeViewPopupClass = new PopupWithImage(placeViewPopupSelector);
+placeViewPopupClass.setEventListeners();
+
+
+const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector);//, submiterForPopupWithConfirm);
+confirmPopupClass.setEventListeners();
 
 
 const profileValidator = new FormValidator(keysForFormValidate, profilePopupForm);
@@ -260,4 +206,10 @@ personEditButton.addEventListener('click', () => {
 placeAddButton.addEventListener('click', () => {
   placeValidator.clearPopupFromErrors();
   placePopupClass.open();
+});
+
+
+avatarButton.addEventListener('click', () => {
+  avatarValidator.clearPopupFromErrors();
+  avatarPopupClass.open();
 });
