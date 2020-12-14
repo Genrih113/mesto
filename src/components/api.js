@@ -17,9 +17,6 @@ export class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
-    .catch(err => {
-      console.log(err);
-    })
   }
 
   getInitialCards() {
@@ -34,9 +31,6 @@ export class Api {
       } else {
         return Promise.reject(`Ошибка: ${res.status}`);
       }
-    })
-    .catch(err => {
-      console.log(err);
     })
   }
 

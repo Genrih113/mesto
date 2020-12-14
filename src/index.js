@@ -82,8 +82,9 @@ Promise.all([apiEx.getUserInfo(), apiEx.getInitialCards()])
 //   //const [userDataObj, initialCardsObj] = dataFromPromises;
 //   console.log(dataFromPromises);
 // })
-
-
+.catch(err => {
+  console.log(err);
+})
 
 //колбэк класса Section
 function renderer({name, link, _id, likes, owner}, containerSelector) {
@@ -186,29 +187,32 @@ function handleCardClick() {
 let cardId; //присвоение в обработчике удаления класса Card
 let deletableCard; //присвоение в обработчике удаления класса Card
 
+
+
 //колбэк класса Card для открытия попапа подтверждения удаления
 function handleDeleteClick() {
+  confirmPopupClass.setSubmiter(() => submiterForPopupWithConfirm(this._imageId, this._place));
   confirmPopupClass.open();
-  cardId = this.getImageId();
-  deletableCard = this._place;
+ // cardId = this.getImageId();
+ // deletableCard = this._place;
 }
 
-const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector, submiterForPopupWithConfirm);
+const confirmPopupClass = new PopupWithConfirm(confirmPopupSelector);//, submiterForPopupWithConfirm);
 confirmPopupClass.setEventListeners();
 
 //колбэк класса PopupWithConfirm для удаления карточки
-function submiterForPopupWithConfirm() {
-  apiEx.deleteCard(cardId)
+function submiterForPopupWithConfirm(imageId, placeCard) {
+  apiEx.deleteCard(imageId)
   .then((result) => {
     console.log(result);
-    deletableCard.remove();
-    cardId = null;
-    deletableCard = null;
+    placeCard.remove();
   })
   .catch(err => {
     console.log(err);
   })
 }
+
+
 
 
 //колбэк класса Card для лайков
