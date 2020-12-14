@@ -68,7 +68,7 @@ export const personAvatar = document.querySelector('.person__avatar');
 export const personName = document.querySelector('.person__name');
 export const personPassion = document.querySelector('.person__passion');
 
-export const myOwnerId = '75afb32823f9c1dc44155bd8';
+//export const myOwnerId = '75afb32823f9c1dc44155bd8';
 
 export const serverKeys = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-18',

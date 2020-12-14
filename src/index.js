@@ -41,24 +41,47 @@ const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector
 
 
 const apiEx = new Api(serverKeys);
+//let userId;
 
 
-//рендер карточек
-apiEx.getInitialCards()
-.then((result) => {
-  console.log(result);
-  const serverCards = new Section({items: result, renderer}, placesContainerSelector);
+// //получение инфо пользователя
+// apiEx.getUserInfo()
+// .then((result) => {
+//   console.log(result);
+//   userId = result._id;
+//   personAvatar.src = result.avatar;
+//   userInfo.setUserInfo({name: result.name, passion: result.about});
+// })
+// .catch(err => {
+//   console.log(err);
+// })
+
+
+// //рендер карточек
+// apiEx.getInitialCards()
+// .then((result) => {
+//   console.log(result);
+//   const serverCards = new Section({items: result, renderer}, placesContainerSelector);
+//   serverCards.renderItems();
+// })
+// .catch(err => {
+//   console.log(err);
+// })
+
+//запрос данных пользователя и карточек с сервера и рендер карточек
+Promise.all([apiEx.getUserInfo(), apiEx.getInitialCards()])
+.then(dataFromPromises => {
+  const [userDataObj, initialCardsObj] = dataFromPromises;
+  const userId = userDataObj._id;
+  personAvatar.src = userDataObj.avatar;
+  userInfo.setUserInfo({name: userDataObj.name, passion: userDataObj.about});
+  const serverCards = new Section({items: initialCardsObj, renderer}, placesContainerSelector);
   serverCards.renderItems();
-});
-
-
-//получение инфо пользователя
-apiEx.getUserInfo()
-  .then((result) => {
-    console.log(result);
-    personAvatar.src = result.avatar;
-    userInfo.setUserInfo({name: result.name, passion: result.about});
-});
+})
+// .catch(dataFromPromises => {
+//   //const [userDataObj, initialCardsObj] = dataFromPromises;
+//   console.log(dataFromPromises);
+// })
 
 
 
@@ -91,6 +114,10 @@ function submiterForProfile(inputsInfoObject) {
   .then((result) => {
     userInfo.setUserInfo({name: result.name, passion: result.about});
     this.close();
+  })
+  .catch(err => {
+    console.log(err);
+    this.close();
   });
 }
 
@@ -110,8 +137,11 @@ function submiterForPlace(inputsInfoObject) {
         result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, result._id, result.likes.length, isItMyCard, doILiked))
         .createCard());
       this.close();
-    });
-
+    })
+    .catch(err => {
+      console.log(err);
+      this.close();
+    })
 }
 
 
@@ -140,7 +170,6 @@ function submiterForAvatar(url) {
     console.log(err);
     this.close();
   })
-
 }
 
 
@@ -154,8 +183,8 @@ function handleCardClick() {
 
 
 
-let cardId; //значение берется из класса Card
-let deletableCard; //значение берется из класса Card
+let cardId; //присвоение в обработчике удаления класса Card
+let deletableCard; //присвоение в обработчике удаления класса Card
 
 //колбэк класса Card для открытия попапа подтверждения удаления
 function handleDeleteClick() {
@@ -170,30 +199,40 @@ confirmPopupClass.setEventListeners();
 //колбэк класса PopupWithConfirm для удаления карточки
 function submiterForPopupWithConfirm() {
   apiEx.deleteCard(cardId)
-    .then((result) => {
-      console.log(result);
-      deletableCard.remove();
-      cardId = null;
-      deletableCard = null;
-    });
+  .then((result) => {
+    console.log(result);
+    deletableCard.remove();
+    cardId = null;
+    deletableCard = null;
+  })
+  .catch(err => {
+    console.log(err);
+  })
 }
 
 
 //колбэк класса Card для лайков
 function handleLikeClick() {
-   if (!this._doILikedCard) {
-     apiEx.likeToggleCard(this._doILikedCard, this._imageId)
-     .then((result) => {
-       console.log(result);
-       this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
-       this._place.querySelector('.place__like-counter').textContent = result.likes.length;
-     });} else {
-       apiEx.likeToggleCard(this._doILikedCard, this._imageId)
-       .then((result) => {
-       this._place.querySelector('.place__like-button').classList.remove('place__like-button_liked');
-       this._place.querySelector('.place__like-counter').textContent = result.likes.length;
-     })
-     }
+  if (!this._doILikedCard) {
+    apiEx.likeToggleCard(this._doILikedCard, this._imageId)
+    .then((result) => {
+      console.log(result);
+      this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
+      this._place.querySelector('.place__like-counter').textContent = result.likes.length;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  } else {
+    apiEx.likeToggleCard(this._doILikedCard, this._imageId)
+    .then((result) => {
+      this._place.querySelector('.place__like-button').classList.remove('place__like-button_liked');
+      this._place.querySelector('.place__like-counter').textContent = result.likes.length;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 }
 
 
