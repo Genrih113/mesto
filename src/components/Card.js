@@ -42,7 +42,7 @@ export class Card {
   }
 
   _setDeleteListener() {
-    this._place.querySelector('.place__delete-button').addEventListener('click', () => {
+    this._placeDeleteButton.addEventListener('click', () => {
       this._handleDeleteClick();
     });
   }
@@ -61,17 +61,22 @@ export class Card {
 
   createCard() {
     this._place = this._getTemplate();
+    this._placeDeleteButton = this._place.querySelector('.place__delete-button');
+    this._placeLikeButton = this._place.querySelector('.place__like-button');
+    this._placeLikeCounter = this._place.querySelector('.place__like-counter');
+    this._placeImageElement = this._place.querySelector('.place__img');
+    this._placeTitle = this._place.querySelector('.place__title');
+
     if (!this._isItMyCard) {
-      this._place.querySelector('.place__delete-button').classList.add('place__delete-button_invisible');
+      this._placeDeleteButton.classList.add('place__delete-button_invisible');
     }
     if (this._doILikedCard) {
-      this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
+      this._placeLikeButton.classList.add('place__like-button_liked');
     }
-    this._place.querySelector('.place__title').textContent = this._placeName;
-    this._placeImageElement = this._place.querySelector('.place__img');
+    this._placeTitle.textContent = this._placeName;
     this._placeImageElement.alt = this._placeName;
     this._placeImageElement.src = this._placeLink;
-    this._place.querySelector('.place__like-counter').textContent = this._numberOfLikes;
+    this._placeLikeCounter.textContent = this._numberOfLikes;
 
     this._setDeleteListener();
     this._setLikeListener();

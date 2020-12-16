@@ -22,6 +22,7 @@ export const placeTemplateSelector = '#place';
 export const placesContainerSelector = '.places';
 export const personNameSelector = '.person__name';
 export const personPassionSelector = '.person__passion';
+export const personAvatarSelector = '.person__avatar';
 export const profilePopupSelector = '.popup_profile';
 export const placePopupSelector = '.popup_place';
 export const placeViewPopupSelector = '.popup_place-view';

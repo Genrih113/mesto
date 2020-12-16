@@ -1,12 +1,12 @@
 import './pages/index.css';
-import {Card} from './components/card.js';
-import {FormValidator} from './components/validate.js';
-import {Section} from './components/section.js';
-import {PopupWithForm} from './components/popupwithform.js';
-import {PopupWithImage} from './components/popupwithimage.js';
-import {UserInfo} from './components/userinfo.js';
-import {PopupWithConfirm} from './components/popupwithconfirm.js';
-import {Api} from './components/api.js';
+import {Card} from './components/Card.js';
+import {FormValidator} from './components/FormValidator.js';
+import {Section} from './components/Section.js';
+import {PopupWithForm} from './components/PopupWithForm.js';
+import {PopupWithImage} from './components/PopupWithImage.js';
+import {UserInfo} from './components/UserInfo.js';
+import {PopupWithConfirm} from './components/PopupWithConfirm.js';
+import {Api} from './components/Api.js';
 
 import {
   personEditButton,
@@ -30,7 +30,8 @@ import {
   personAvatar,
   confirmPopupSelector,
 
-  serverKeys
+  serverKeys,
+  personAvatarSelector
 } from './utils/constants.js';
 
 
@@ -74,7 +75,7 @@ function submiterForPlace(inputsInfoObject) {
     .then((result) => {
       let isItMyCard = true;
       let doILiked = false;
-      let cardsSection = new Section({items: result, renderer}, placesContainerSelector);
+      const cardsSection = new Section({items: result, renderer}, placesContainerSelector);
       cardsSection.addItem((new Card(
         result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, result._id, result.likes.length, isItMyCard, doILiked))
         .createCard());
@@ -109,8 +110,8 @@ function handleLikeClick() {
   if (!this._doILikedCard) {
     api.likeToggleCard(this._doILikedCard, this._imageId)
     .then((result) => {
-      this._place.querySelector('.place__like-button').classList.add('place__like-button_liked');
-      this._place.querySelector('.place__like-counter').textContent = result.likes.length;
+      this._placeLikeButton.classList.add('place__like-button_liked');
+      this._placeLikeCounter.textContent = result.likes.length;
     })
     .catch(err => {
       console.log(err);
@@ -118,8 +119,8 @@ function handleLikeClick() {
   } else {
     api.likeToggleCard(this._doILikedCard, this._imageId)
     .then((result) => {
-      this._place.querySelector('.place__like-button').classList.remove('place__like-button_liked');
-      this._place.querySelector('.place__like-counter').textContent = result.likes.length;
+      this._placeLikeButton.classList.remove('place__like-button_liked');
+      this._placeLikeCounter.textContent = result.likes.length;
     })
     .catch(err => {
       console.log(err);
@@ -138,14 +139,17 @@ function submiterForPopupWithConfirm(imageId, placeCard) {
   api.deleteCard(imageId)
   .then((result) => {
     placeCard.remove();
+    console.log(this);
+    confirmPopupClass.close();
   })
   .catch(err => {
     console.log(err);
+    confirmPopupClass.close();
   })
 }
 
 
-const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector});
+const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector, avatarSelector: personAvatarSelector});
 
 const api = new Api(serverKeys);
 
@@ -156,8 +160,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 .then(dataFromPromises => {
   const [userDataObj, initialCardsObj] = dataFromPromises;
   userId = userDataObj._id;
-  personAvatar.src = userDataObj.avatar;
+  //personAvatar.src = userDataObj.avatar;
   userInfo.setUserInfo({name: userDataObj.name, passion: userDataObj.about});
+  userInfo.setUserAvatar(userDataObj.avatar);
   const serverCards = new Section({items: initialCardsObj, renderer}, placesContainerSelector);
   serverCards.renderItems();
 })

@@ -1,4 +1,4 @@
-import { Popup } from "./popup.js";
+import { Popup } from "./Popup.js";
 export class PopupWithImage extends Popup {
   open(placeName, placeLink) {
     this._popup.querySelector('.popup__place-image').src = placeLink;
