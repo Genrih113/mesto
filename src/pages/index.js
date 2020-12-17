@@ -1,12 +1,12 @@
-import './pages/index.css';
-import {Card} from './components/Card.js';
-import {FormValidator} from './components/FormValidator.js';
-import {Section} from './components/Section.js';
-import {PopupWithForm} from './components/PopupWithForm.js';
-import {PopupWithImage} from './components/PopupWithImage.js';
-import {UserInfo} from './components/UserInfo.js';
-import {PopupWithConfirm} from './components/PopupWithConfirm.js';
-import {Api} from './components/Api.js';
+import './index.css';
+import {Card} from '../components/Card.js';
+import {FormValidator} from '../components/FormValidator.js';
+import {Section} from '../components/Section.js';
+import {PopupWithForm} from '../components/PopupWithForm.js';
+import {PopupWithImage} from '../components/PopupWithImage.js';
+import {UserInfo} from '../components/UserInfo.js';
+import {PopupWithConfirm} from '../components/PopupWithConfirm.js';
+import {Api} from '../components/Api.js';
 
 import {
   personEditButton,
@@ -32,7 +32,9 @@ import {
 
   serverKeys,
   personAvatarSelector
-} from './utils/constants.js';
+} from '../utils/constants.js';
+
+import {renderLoading} from '../utils/utils.js';
 
 
 //колбэк класса Section
@@ -52,52 +54,57 @@ function renderer({name, link, _id, likes, owner}, containerSelector) {
     doILiked = false;
   };
   const cardElement = new Card(name, link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, _id, likes.length, isItMyCard, doILiked);
-  const cardsBlock = document.querySelector(containerSelector);
-  cardsBlock.append(cardElement.createCard());
+  this.addItem(cardElement.createCard());
 }
 
 //колбэк класса PopupWithForm для попапа профиля
 function submiterForProfile(inputsInfoObject) {
+  renderLoading(true);
   api.editUserInfo(inputsInfoObject)
   .then((result) => {
     userInfo.setUserInfo({name: result.name, passion: result.about});
-    this.close();
   })
   .catch(err => {
     console.log(err);
+  })
+  .finally(() => {
+    renderLoading(false);
     this.close();
   });
 }
 
 //колбэк класса PopupWithForm для попапа добавления новой карточки
 function submiterForPlace(inputsInfoObject) {
+  renderLoading(true);
   api.addNewCard(inputsInfoObject)
     .then((result) => {
-      let isItMyCard = true;
-      let doILiked = false;
-      const cardsSection = new Section({items: result, renderer}, placesContainerSelector);
-      cardsSection.addItem((new Card(
-        result.name, result.link, placeTemplateSelector, handleCardClick, handleDeleteClick, handleLikeClick, result._id, result.likes.length, isItMyCard, doILiked))
-        .createCard());
-      this.close();
+      result.owner = {_id: userId};
+      result.likes = [];
+      placeSection.renderItems([result]);
     })
     .catch(err => {
       console.log(err);
-      this.close();
     })
+    .finally(() => {
+      renderLoading(false);
+      this.close();
+    });
 }
 
 //колбэк отправки аватара
 function submiterForAvatar(url) {
+  renderLoading(true);
   api.changeAvatar(url)
   .then((result) => {
     personAvatar.src = result.avatar;
-    this.close();
   })
   .catch(err => {
     console.log(err);
-    this.close();
   })
+  .finally(() => {
+    renderLoading(false);
+    this.close();
+  });
 }
 
 //колбэк класса Card для открытия картинки в попапе
@@ -139,32 +146,31 @@ function submiterForPopupWithConfirm(imageId, placeCard) {
   api.deleteCard(imageId)
   .then((result) => {
     placeCard.remove();
-    console.log(this);
-    confirmPopupClass.close();
   })
   .catch(err => {
     console.log(err);
-    confirmPopupClass.close();
   })
+  .finally(() => confirmPopupClass.close());
 }
 
 
 const userInfo = new UserInfo({nameSelector: personNameSelector, passionSelector: personPassionSelector, avatarSelector: personAvatarSelector});
 
+
 const api = new Api(serverKeys);
 
 let userId;
+
+const placeSection = new Section(renderer, placesContainerSelector);
 
 //запрос данных пользователя и карточек с сервера и рендер карточек
 Promise.all([api.getUserInfo(), api.getInitialCards()])
 .then(dataFromPromises => {
   const [userDataObj, initialCardsObj] = dataFromPromises;
   userId = userDataObj._id;
-  //personAvatar.src = userDataObj.avatar;
   userInfo.setUserInfo({name: userDataObj.name, passion: userDataObj.about});
   userInfo.setUserAvatar(userDataObj.avatar);
-  const serverCards = new Section({items: initialCardsObj, renderer}, placesContainerSelector);
-  serverCards.renderItems();
+  placeSection.renderItems(initialCardsObj);
 })
 .catch(err => {
   console.log(err);
